@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+    <display-name>cics-java-liberty-springboot-jcics</display-name>   
+<login-config>
+        <auth-method>BASIC</auth-method>
+    </login-config>   
+    <security-constraint>
+        <display-name>com.ibm.cicsdev.springboot.jcics</display-name>
+        <web-resource-collection>
+            <web-resource-name>com.ibm.cicsdev.springboot.jcics</web-resource-name>
+            <description>Protection rules for all servlets</description>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>All Authenticated users </description>
+            <role-name>cicsAllAuthenticated</role-name>
+        </auth-constraint>
+    </security-constraint>   
+    <security-role>
+        <description>The CICS cicsAllAuthenticated role</description>
+        <role-name>cicsAllAuthenticated</role-name>
+    </security-role>
+</web-app>
