@@ -51,7 +51,6 @@ public class TSQInfoController {
 		
 	}
 	
-	
 
 	/**
 	 * A method to obtain the name of the TSQ. 
