@@ -25,9 +25,6 @@ import com.ibm.cics.server.TSQ;
 @RestController
 public class BrowseTSQController {
 
-	// EBCDIC encoding of the CICS system used to create byte array for the holder object
-	private static String LOCAL_CCSID = System.getProperty("com.ibm.cics.jvmserver.local.ccsid");
-
 	/**
 	 * The @GetMapping annotation ensures that HTTP GET requests to the /browseTSQs URL path are
 	 * mapped to the annotated method. 
@@ -65,14 +62,14 @@ public class BrowseTSQController {
 	 * @throws UnsupportedEncodingException 
 	 */
 	private ArrayList<String> browseTSQ(String tsqName) throws CicsConditionException, UnsupportedEncodingException {
-		// An ArrayList to hold all of the items read from TSQ to be returned to the Servlet.
+		// An ArrayList to hold all of the items read from TSQ to be returned to the servlet.
 		ArrayList<String> records = new ArrayList<String>();
 
 		// construct a JCICS representation of the TSQ object
 		TSQ tsqQ = new TSQ();
 		tsqQ.setName(tsqName);
 
-		// The holder object will hold the byte array that is read from the TSQ.
+		// the holder object will hold the byte array that is read from the TSQ
 		ItemHolder holder = new ItemHolder();
 
 		// initialize loop variables
@@ -83,18 +80,16 @@ public class BrowseTSQController {
 		// read an item and store the total number of items on the queue
 		totalItems = tsqQ.readItem(itemPos, holder);
 
-		// Add the record to the ArrayList to be returned
-		recordStr = new String(holder.getValue(), LOCAL_CCSID);
+		// get string from the holder byte[] -  defaults to using EBCDIC encoding of CICS region
+		// then add the record to the ArrayList to be returned
+		recordStr = holder.getStringValue();		
 		records.add(recordStr);
 
-		// iterate over the remaining items and add them to the ArrayList
+		// iterate over the remaining items and add  to the ArrayList
 		while (itemPos < totalItems) {
 			tsqQ.readNextItem(holder);
-
-			// Add the record
-			recordStr = new String(holder.getValue(), LOCAL_CCSID);
+			recordStr = holder.getStringValue();
 			records.add(recordStr);
-
 			itemPos++;
 		}
 
