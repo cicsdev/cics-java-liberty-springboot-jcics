@@ -23,9 +23,10 @@ eclipse
     }
 }
 
+
 repositories
 {
-  mavenCentral()
+	mavenCentral()
 }
 
 
@@ -34,7 +35,7 @@ dependencies
     // Spring Boot web starter
     implementation("org.springframework.boot:spring-boot-starter-web")	
 
-    // Don't include Tomcat in the runtime build, but do put it in WEB-INF so it can be run standalone a well as embedded
+    // Don't include Tomcat in the runtime build, but do put it in WEB-INF so it can be run standalone as well as embedded
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
     // CICS TS V5.5 Maven BOM (as of 19th May 2020)
