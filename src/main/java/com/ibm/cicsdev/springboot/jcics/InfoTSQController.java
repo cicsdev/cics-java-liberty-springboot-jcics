@@ -36,7 +36,7 @@ public class InfoTSQController
 		String type = "<type>" + tsq.getType() + "</type>";
 		String lenStr = "<length>" + getTSQLength(tsq) + "</length>";
 
-		return "The current TSQ information is: " + "Name: " + name + "&& Type: " + type + "&& Length: " + lenStr;			
+		return "The current TSQ information is: " + "Name: " + name + ", Type: " + type + ", Length: " + lenStr;			
 	}
 	
 	
