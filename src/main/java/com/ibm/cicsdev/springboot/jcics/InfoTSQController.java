@@ -13,33 +13,49 @@ package com.ibm.cicsdev.springboot.jcics;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.ibm.cics.server.CicsConditionException;
+
+import com.ibm.cics.server.ItemHolder;
 import com.ibm.cics.server.TSQ;
 
 @RestController
-public class DeleteTSQController 
-{
+public class InfoTSQController 
+{	
 	/**
 	 * The @GetMapping annotation ensures that HTTP GET requests are mapped to the annotated method. 
 	 * @throws IOException 
 	 **/
-	@GetMapping({"/delete", "/deleteTSQs", "/deleteTSQ"})
-	public String deleteTSQ(@RequestParam(value = "tsq", defaultValue = "ANNE") String tsqName) 
+	@GetMapping({"/info", "/TSQInfos", "/infoTSQ"})
+	public String infoTSQ(@RequestParam(value = "tsq", defaultValue = "ANNE") String tsqName) 
 	{
-		// Delete the TSQ
+		// Create a JCICS representation of the TSQ object		
+		TSQ tsq = new TSQ();
+		tsq.setName(tsqName);
+		
+		// obtain some information about the TSQ
+		String name = "<name>" + tsq.getName() + "</name>";
+		String type = "<type>" + tsq.getType() + "</type>";
+		String lenStr = "<length>" + getTSQLength(tsq) + "</length>";
+
+		return "The current TSQ information is: " + "Name: " + name + "&& Type: " + type + "&& Length: " + lenStr;			
+	}
+	
+	
+	/**
+	 * A method to get the number of items (length) of the TSQ. 
+	 * @return, the number of items on the TSQ or associated error code.
+	 */
+	public int getTSQLength(TSQ tsq) 
+	{		
+		// Read the first item to get the length of the queue
 		try 
 		{
-			// perform the delete of the TSQ and return success result			
-			TSQ tsqQ = new TSQ();
-			tsqQ.setName(tsqName);
-			tsqQ.delete();
-			return "TSQ " + tsqName + " successfully deleted.";
+			return tsq.readItem(1, new ItemHolder());
 		} 
-		catch ( CicsConditionException e) 
-		{
-			// Return error details
+		catch (Exception e) 
+		{			
 			e.printStackTrace();
-			return "Unexpected CICS condition exception: "  + e.getMessage() + ". Check dfhjvmerr for further details.";
-		}		
+			return -1;
+		} 		
 	}
+
 }

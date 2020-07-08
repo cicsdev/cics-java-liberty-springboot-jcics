@@ -10,8 +10,6 @@
 
 package com.ibm.cicsdev.springboot.jcics;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,77 +21,72 @@ import com.ibm.cics.server.ItemHolder;
 import com.ibm.cics.server.TSQ;
 
 @RestController
-public class BrowseTSQController {
-
+public class BrowseTSQController 
+{
 	/**
 	 * The @GetMapping annotation ensures that HTTP GET requests to the /browseTSQs URL path are
-	 * mapped to the annotated method. 
-	 * @throws IOException 
-	 **/
-	
-	@GetMapping("/browseTSQs")
-	public String browseTSQs(@RequestParam(value = "tsqName", defaultValue = "ANNE") String tsqName) throws IOException {
+	 * mapped to the annotated method.  
+	 **/	
+	@GetMapping({"browse", "/browseTSQs", "/browseTSQ"})
+	public String browseTSQ(@RequestParam(value = "tsq", defaultValue = "ANNE") String tsqName) 
+	{
+		// ArrayList of items in the TSQ
+		ArrayList<String> tsqItems;
 
-		// retrieve and store the list of items on the TSQ
-		ArrayList<String> records = new ArrayList<String>();
-
-		// browse the records
-		try {
-			
-			records = browseTSQ(tsqName);
-			
-		} catch ( CicsConditionException e) {
-			
-			// Print the stack trace
+		// Populate the records
+		try 
+		{		
+			tsqItems = readTSQ(tsqName);		
+		} 
+		catch ( CicsConditionException e) 
+		{		
+			// Return error details
 			e.printStackTrace();
-
-			// Return useful information to the users when meeting errors
-			return "Oops! Unexpected CICS conditionn exception: "  + e.getMessage() + ". Please check stderr for details.";
+			return "Unexpected CICS condition exception: "  + e.getMessage() + ". Check dfhjvmerr for further details.";
 		}		
 
-		return records.toString();
+		return tsqItems.toString();
 	}
 
+		
 	/**
 	 * A method to browse a CICS TSQ
 	 * 
-	 * @param tsqName, the name of the TSQ to browse @return, an ArrayList of records from the TSQ
+	 * @param tsqName, the name of the TSQ to browse 
+	 * @return, an ArrayList of records from the TSQ
 	 * @throws CicsConditionException
-	 * @throws UnsupportedEncodingException 
 	 */
-	private ArrayList<String> browseTSQ(String tsqName) throws CicsConditionException, UnsupportedEncodingException {
-		// An ArrayList to hold all of the items read from TSQ to be returned to the servlet.
-		ArrayList<String> records = new ArrayList<String>();
+	private ArrayList<String> readTSQ(String tsqName) throws CicsConditionException 
+	{
+		// An ArrayList to hold all of the items read from the TSQ
+		ArrayList<String> tsqItems = new ArrayList<String>();
 
-		// construct a JCICS representation of the TSQ object
-		TSQ tsqQ = new TSQ();
+		// Create a JCICS representation of the TSQ object
+		TSQ tsqQ = new TSQ();			
 		tsqQ.setName(tsqName);
 
-		// the holder object will hold the byte array that is read from the TSQ
+		// Create a holder object to store the byte array representing a tsq item
 		ItemHolder holder = new ItemHolder();
 
-		// initialize loop variables
+		// initialise item position
 		int itemPos = 1;
-		int totalItems = 0;
-		String recordStr = null;
 
-		// read an item and store the total number of items on the queue
-		totalItems = tsqQ.readItem(itemPos, holder);
+		// read the first item into the holder (and get the total number of items on the queue)
+		int totalItems = tsqQ.readItem(itemPos, holder);
+		
+		// add the string representation of the tsq item to the ArrayList
+		// getStringValue() - uses the default EBCDIC encoding of CICS region
+		tsqItems.add(holder.getStringValue());
 
-		// get string from the holder byte[] -  defaults to using EBCDIC encoding of CICS region
-		// then add the record to the ArrayList to be returned
-		recordStr = holder.getStringValue();		
-		records.add(recordStr);
-
-		// iterate over the remaining items and add  to the ArrayList
-		while (itemPos < totalItems) {
-			tsqQ.readNextItem(holder);
-			recordStr = holder.getStringValue();
-			records.add(recordStr);
+		// iterate over, and add, the remaining items to the ArrayList
+		while (itemPos < totalItems) 
+		{
+			tsqQ.readNextItem(holder);			
+			tsqItems.add(holder.getStringValue());
 			itemPos++;
 		}
 
-		// return the arraylist containing the records from the TSQ
-		return records;
+		// return the Arraylist containing the records from the TSQ
+		return tsqItems;
 	}
 }
