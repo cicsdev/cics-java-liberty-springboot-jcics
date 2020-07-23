@@ -23,7 +23,7 @@ public class DeleteTSQController
 	 * The @GetMapping annotation ensures that HTTP GET requests are mapped to the annotated method. 
 	 * @throws IOException 
 	 **/
-	@GetMapping({"/delete", "/deleteTSQs", "/deleteTSQ"})
+	@GetMapping("/delete")
 	public String deleteTSQ(@RequestParam(value = "tsq", defaultValue = "ANNE") String tsqName) 
 	{
 		// Delete the TSQ

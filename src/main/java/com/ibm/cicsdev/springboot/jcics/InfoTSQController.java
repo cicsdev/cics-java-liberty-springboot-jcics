@@ -24,7 +24,7 @@ public class InfoTSQController
 	 * The @GetMapping annotation ensures that HTTP GET requests are mapped to the annotated method. 
 	 * @throws IOException 
 	 **/
-	@GetMapping({"/info", "/TSQInfos", "/infoTSQ"})
+	@GetMapping("/info")
 	public String infoTSQ(@RequestParam(value = "tsq", defaultValue = "ANNE") String tsqName) 
 	{
 		// Create a JCICS representation of the TSQ object		

@@ -24,7 +24,7 @@ public class WriteTSQController
 	 * The @GetMapping annotation ensures that HTTP GET requests are mapped to the annotated method. 
 	 * @throws IOException 
 	 **/
-	@GetMapping({"/write", "/writeTSQs", "/writeTSQ"})
+	@GetMapping("/write")
 	public String writeTSQ(@RequestParam(value = "tsq", defaultValue = "ANNE") String tsqName,
 			@RequestParam(value = "item", defaultValue = "Hello from Spring Boot in CICS") String tsqItemContent) 
 	{		

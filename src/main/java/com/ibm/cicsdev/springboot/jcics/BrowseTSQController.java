@@ -27,7 +27,7 @@ public class BrowseTSQController
 	 * The @GetMapping annotation ensures that HTTP GET requests to the /browseTSQs URL path are
 	 * mapped to the annotated method.  
 	 **/	
-	@GetMapping({"browse", "/browseTSQs", "/browseTSQ"})
+	@GetMapping("/browse")
 	public String browseTSQ(@RequestParam(value = "tsq", defaultValue = "ANNE") String tsqName) 
 	{
 		// ArrayList of items in the TSQ
