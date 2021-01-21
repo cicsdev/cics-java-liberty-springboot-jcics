@@ -138,10 +138,10 @@ This creates a WAR file inside the `target` directory.
 
 The example application is divided into four services which perform actions on a CICS temporary storage queuue (TSQ). Each with their own REST service suffix as follows:
 
-- *TSQInfos* - query information about the TSQ
-- *writeTSQs* - write information to a TSQ 
-- *browseTSQs* - read items from the TSQ
-- *deleteTSQs* - delete the TSQ
+- *info* - query information about the TSQ
+- *write* - write information to a TSQ 
+- *browse* - read items from the TSQ
+- *delete* - delete the TSQ
 
  
  
@@ -150,18 +150,18 @@ The example application is divided into four services which perform actions on a
     - `I SRVE0292I: Servlet Message - [com.ibm.cicsdev.springboot.jcics-0.1.0]:.Initializing Spring embedded WebApplicationContext`
   
 2. Copy the context root from message CWWKT0016I along with the REST service suffix into you web browser. For example to write the string `ILOVECICS` to a TSQ called SPGJCICS:
-    - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/writeTSQs?tsqName=SPGJCICS&tsqContent=ILOVECICS` 
+    - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/write?tsq=SPGJCICS&item=ILOVECICS` 
   
 3. Check if the specified TSQ has the information you expected by either: 
     - Executing the CICS command `CEBR SPGJCICS` on a 3270 terminal. For this example, you should see `ILOVECICS` in TSQ SPGJCICS, or
     - Using the browse TSQ service URL for example to check the content of TSQ SPGJCICS
-        - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/browseTSQs?tsqName=SPGJCICS` 
+        - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/browse?tsq=SPGJCICS` 
   
 4. If you use the TSQ info service you will see the basic information for TSQ SPGJCICS
-    - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/TSQInfos?tsqName=SPGJCICS`   
+    - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/info?tsq=SPGJCICS`   
 
-5. If you want to delete this TSQ, you can use the deleteTSQs service for example
-    - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/deleteTSQs?tsqName=SPGJCICS`  
+5. If you want to delete this TSQ, you can use the delete service for example
+    - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/delete?tsq=SPGJCICS`  
 
 
 ## License
