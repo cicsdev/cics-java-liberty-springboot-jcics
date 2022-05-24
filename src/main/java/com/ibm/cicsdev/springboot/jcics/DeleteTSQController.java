@@ -2,7 +2,7 @@
 /*                                                                        */
 /* SAMPLE                                                                 */
 /*                                                                        */
-/* (c) Copyright IBM Corp. 2020 All Rights Reserved                       */
+/* (c) Copyright IBM Corp. 2020,2022 All Rights Reserved                       */
 /*                                                                        */
 /* US Government Users Restricted Rights - Use, duplication or disclosure */
 /* restricted by GSA ADP Schedule Contract with IBM Corp                  */
@@ -24,7 +24,7 @@ public class DeleteTSQController
 	 * @throws IOException 
 	 **/
 	@GetMapping("/delete")
-	public String deleteTSQ(@RequestParam(value = "tsq", defaultValue = "ANNE") String tsqName) 
+	public String deleteTSQ(@RequestParam(value = "tsq", defaultValue = "IBM") String tsqName) 
 	{
 		// Delete the TSQ
 		try 
