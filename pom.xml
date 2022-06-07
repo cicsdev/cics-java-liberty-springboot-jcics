@@ -63,7 +63,15 @@
     </plugins>
   </build>
 
-  <!-- Publishes artifacts to here if the deploy goal is used. -->
+  <!-- 
+  Publishes artifacts to here if the deploy goal is used. 
+
+  The values here can be passed on the maven command line
+  using the -D flag syntax 
+  
+  for example:
+  -Dpublish-repo-snapshots-name=my-repo 
+  -->
   <distributionManagement>
     <snapshotRepository>
       <id>${publish-repo-snapshots-name}</id>
