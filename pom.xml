@@ -1,7 +1,4 @@
-<project 
-  xmlns="http://maven.apache.org/POM/4.0.0" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <!-- Inherit defaults from Spring Boot Parent -->
@@ -10,7 +7,7 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.3.0.RELEASE</version>
   </parent>
- 
+
   <!-- Application properties -->
   <groupId>com.ibm.cicsdev.springboot</groupId>
   <artifactId>cics-java-liberty-springboot-jcics</artifactId>
@@ -20,7 +17,7 @@
   <properties>
     <java.version>1.8</java.version>
   </properties>
-  
+
   <!-- CICS TS V5.5 BOM (as of May 2020) -->
   <dependencyManagement>
     <dependencies>
@@ -33,29 +30,29 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-    
-  <dependencies>       
+
+  <dependencies>
     <!-- Compile against, but don't include JCICS in the final build (version and scope are from BOM) -->
     <dependency>
       <groupId>com.ibm.cics</groupId>
       <artifactId>com.ibm.cics.server</artifactId>
     </dependency>
-   
-    <!-- Spring Boot web support -->   
+
+    <!-- Spring Boot web support -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-    </dependency> 
-   
-    <!-- Compile against, but don't include Tomcat in the runtime build --> 
+    </dependency>
+
+    <!-- Compile against, but don't include Tomcat in the runtime build -->
     <dependency>
-	  <groupId>org.springframework.boot</groupId>
-	  <artifactId>spring-boot-starter-tomcat</artifactId>
-	  <scope>provided</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
-    
-  <!-- Package as an executable war (default is jar) -->  
+
+  <!-- Package as an executable war (default is jar) -->
   <packaging>war</packaging>
   <build>
     <plugins>
@@ -65,5 +62,17 @@
       </plugin>
     </plugins>
   </build>
-    
+
+  <!-- Publishes artifacts to here if the deploy goal is used. -->
+  <distributionManagement>
+    <snapshotRepository>
+      <id>${publish-repo-snapshots-name}</id>
+      <url>${publish-repo-snapshots-url}</url>
+    </snapshotRepository>
+    <repository>
+      <id>${publish-repo-releases-name}</id>
+      <url>${publish-repo-releases-url}</url>
+    </repository>
+  </distributionManagement>
+
 </project>
