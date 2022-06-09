@@ -166,6 +166,3 @@ The example application is divided into four services which perform actions on a
 
 ## License
 This project is licensed under [Eclipse Public License - v 2.0](LICENSE).
-
-
-
