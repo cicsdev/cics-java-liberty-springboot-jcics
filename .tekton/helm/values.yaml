@@ -1,0 +1,14 @@
+# The git branch we are serving up built artifacts for.
+branch: bob
+
+# The URL for the application is of the form: baseUrlPath/gitBranchName
+baseUrlPath: samples-cics-java-liberty-springboot-jcics
+
+# The base name for kube resources to make them small enough.
+applicationShortName: samples-spring-jcics
+
+# The path of the docker image into our docker registry.
+dockerImageName: "cics-java-dev/samples/cics-java-liberty-springboot-jcics"
+
+# The docker registry we draw images from.
+containerRegistry: harbor-cicsk8s.hursley.ibm.com

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+  labels:
+    app: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP

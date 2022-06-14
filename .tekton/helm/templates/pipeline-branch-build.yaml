@@ -1,0 +1,228 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: {{ .Values.applicationShortName }}-{{ .Values.branch }}-build
+#
+#
+#
+spec:
+  #
+  #
+  #
+  workspaces:
+    - name: git-workspace
+  #
+  #
+  #
+  params:
+    - name: distBranch
+      type: string
+      default: main
+    - name: refspec
+      type: string
+      default: +refs/heads/main:refs/heads/main
+    - name: noPush
+      type: string
+      default: ""
+      description: |
+        Decides whether the built docker image is pushed to the docker repo or not.
+        Default is to push, unless “--no-push” is used.
+    - name: gitRepoName
+      type: string
+    - name: containerRegistry
+      type: string
+
+  #
+  #
+  #
+  tasks:
+    #
+    # Clone the sample repo source code into our workspace.
+    #
+    - name: clone-sample-repo
+      taskRef:
+        kind: Task
+        name: git-clone
+      params:
+        - name: url
+          value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
+        - name: revision
+          value: $(params.distBranch)
+        - name: refspec
+          value: $(params.refspec)
+        - name: depth
+          value: "50"
+        - name: subdirectory
+          value: $(params.gitRepoName)
+      workspaces:
+        - name: output
+          workspace: git-workspace
+
+    #
+    # Clone the build infrastructure repo into our workspace.
+    #
+    - name: clone-build-infrastructure-repo
+      taskRef:
+        kind: Task
+        name: git-clone
+      params:
+        - name: url
+          value: git@github.ibm.com:cics-samples/samples-build-infrastructure.git
+        - name: revision
+          value: main # Always the main branch
+        - name: refspec
+          value: ""
+        - name: depth
+          value: "1"
+        - name: subdirectory
+          value: samples-build-infrastructure
+      workspaces:
+        - name: output
+          workspace: git-workspace
+
+    #
+    # Build using open jdk 1.8 using maven
+    #
+    - name: build-maven-openjdk-8
+      taskRef:
+        kind: Task
+        name: task-samples-jcics-maven
+      runAfter:
+        - clone-sample-repo
+      params:
+        - name: gitSubDir
+          value: $(params.gitRepoName)
+        - name: mavenImageTag
+          value: 3.8.5-openjdk-8
+        - name: containerRegistry
+          value: $(params.containerRegistry)
+      workspaces:
+        - name: git-workspace
+          workspace: git-workspace
+
+    #
+    # Build using open jdk 18 using maven
+    #
+    - name: build-maven-openjdk-18
+      taskRef:
+        kind: Task
+        name: task-samples-jcics-maven
+      runAfter:
+        - clone-sample-repo
+      params:
+        - name: gitSubDir
+          value: $(params.gitRepoName)
+        - name: mavenImageTag
+          value: 3.8.5-openjdk-18
+        - name: containerRegistry
+          value: $(params.containerRegistry)
+      workspaces:
+        - name: git-workspace
+          workspace: git-workspace
+
+    #
+    # Build using open jdk 1.8 using gradle
+    #
+    - name: build-gradle-openjdk-1-8
+      taskRef:
+        kind: Task
+        name: task-samples-jcics-gradle
+      runAfter:
+        - clone-sample-repo
+      params:
+        - name: gitSubDir
+          value: $(params.gitRepoName)
+        - name: gradleImageTag
+          value: 7.4.2-jdk8
+        - name: containerRegistry
+          value: $(params.containerRegistry)
+      workspaces:
+        - name: git-workspace
+          workspace: git-workspace
+
+    #
+    # Build using open jdk 18 using gradle
+    #
+    - name: build-gradle-openjdk-18
+      taskRef:
+        kind: Task
+        name: task-samples-jcics-gradle
+      runAfter:
+        - clone-sample-repo
+      params:
+        - name: gitSubDir
+          value: $(params.gitRepoName)
+        - name: gradleImageTag
+          value: 7.4.2-jdk18
+        - name: containerRegistry
+          value: $(params.containerRegistry)
+      workspaces:
+        - name: git-workspace
+          workspace: git-workspace
+
+    #
+    # Stamp the git hash into the image so we can tell what level of source built the artifacts.
+    #
+    - name: gather-build-provenance
+      taskRef:
+        kind: Task
+        name: task-gather-build-provenance
+      runAfter:
+        - clone-sample-repo
+      workspaces:
+        - name: git-workspace
+          workspace: git-workspace
+      params:
+        - name: url
+          value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
+        - name: revision
+          value: $(params.distBranch)
+        - name: refspec
+          value: $(params.refspec)
+        - name: repoName
+          value: $(params.gitRepoName)
+        - name: gitSubDir
+          value: $(params.gitRepoName)
+        - name: containerRegistry
+          value: $(params.containerRegistry)
+
+  #
+  # Whatever happens to the build above, we want to expose what was/wasn't built to the caller.
+  #
+  # Finally tasks run in series, only after the status of all normal tasks have been settled.
+  #
+  finally:
+    # Finally tasks all happen in parallel, and you can't control the order.
+
+    #
+    # Build a docker image which contains the artifacts published by the
+    # build tasks above.
+    #
+    # The build logs and built artifacts are gathered
+    # The build status 'badge' svg is added
+    # The docker image is created
+    # The docker image is pushed to the container repository
+    # The deployment is refreshed to pick up the new docker image.
+    #
+    - name: build-artifact-server-image
+      taskRef:
+        kind: Task
+        name: task-artifact-server-builder
+      params:
+        - name: imageName
+          value: $(params.gitRepoName)
+        - name: distBranch
+          value: $(params.distBranch)
+        - name: imageTag
+          value: $(params.distBranch)
+        - name: containerRegistry
+          value: $(params.containerRegistry)
+        - name: aggregateTasksStatus
+          value: $(tasks.status)
+        - name: deploymentName
+          value: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+
+      workspaces:
+        - name: git-workspace
+          workspace: git-workspace
+

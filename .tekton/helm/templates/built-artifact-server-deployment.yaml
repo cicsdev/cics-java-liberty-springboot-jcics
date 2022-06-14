@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+  labels:
+    app: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+      - name: {{ .Values.applicationShortName }}
+        image: {{ .Values.containerRegistry }}/{{ .Values.dockerImageName }}:{{ .Values.branch }}
+        imagePullPolicy: Always
+        env:
+        - name: CONTEXTROOT
+          value: {{ .Values.baseUrlPath }}/{{ .Values.branch }}
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        resources:
+          requests:
+            memory: 50Mi
