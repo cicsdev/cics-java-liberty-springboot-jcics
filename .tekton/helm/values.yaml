@@ -10,5 +10,8 @@ applicationShortName: samples-spring-jcics
 # The path of the docker image into our docker registry.
 dockerImageName: "cics-java-dev/samples/cics-java-liberty-springboot-jcics"
 
+# The name of the git repository
+gitRepoName: cics-java-liberty-springboot-jcics
+
 # The docker registry we draw images from.
 containerRegistry: harbor-cicsk8s.hursley.ibm.com
