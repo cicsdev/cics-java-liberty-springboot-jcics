@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: {{ .Values.applicationShortName }}-{{ .Values.branch }}-build
+  name: samples-{{ .Values.gitRepoName }}-{{ .Values.branch }}-build
 #
 #
 #
