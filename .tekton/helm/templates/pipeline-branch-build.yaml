@@ -221,6 +221,10 @@ spec:
           value: $(tasks.status)
         - name: deploymentName
           value: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+        - name: workingDir
+          value: /workspace/git/$(params.gitRepoName)
+        - name: dockerFile
+          value: .tekton/resources/artifact-server/Dockerfile
 
       workspaces:
         - name: git-workspace
