@@ -225,6 +225,8 @@ spec:
           value: /workspace/git/$(params.gitRepoName)
         - name: dockerFile
           value: $(params.gitRepoName)/.tekton/resources/artifact-server/Dockerfile
+        - name: gitRepoName
+          value: $(params.gitRepoName)
 
       workspaces:
         - name: git-workspace
