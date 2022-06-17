@@ -8,7 +8,7 @@ RUN rm -v /usr/local/apache2/htdocs/*
 COPY /workspace/git/${GIT_REPO}/resources/artifact-server/httpd.conf /usr/local/apache2/conf/httpd.conf
 
 # Copy-in the binary contents we want to expose.
-COPY built-artifacts/ /usr/local/apache2/htdocs/
+COPY /workspace/git/built-artifacts/ /usr/local/apache2/htdocs/
 
 # Just to make it obvious in the logs what we have just packaged.
 RUN ls -R /usr/local/apache2/htdocs/
