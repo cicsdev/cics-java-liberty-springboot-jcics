@@ -5,7 +5,7 @@ FROM harbor-cicsk8s.hursley.ibm.com/dockerhub/library/httpd:2.4
 RUN rm -v /usr/local/apache2/htdocs/*
 
 # Over-ride the configuration to enable file browsing
-COPY ${GIT_REPO}/resources/artifact-server/httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY ${GIT_REPO}/.tekton/resources/artifact-server/httpd.conf /usr/local/apache2/conf/httpd.conf
 
 # Copy-in the binary contents we want to expose.
 COPY built-artifacts/ /usr/local/apache2/htdocs/
