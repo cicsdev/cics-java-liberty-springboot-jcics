@@ -1,6 +1,9 @@
 FROM harbor-cicsk8s.hursley.ibm.com/dockerhub/library/httpd:2.4
 # Based on the apache web server image.
 
+# Get the git repo name from the environment.
+ARG GIT_REPO
+
 # Get rid of index.html default file. We want to allow file browsing.
 RUN rm -v /usr/local/apache2/htdocs/*
 
