@@ -15,22 +15,23 @@ spec:
   #
   #
   params:
-    - name: distBranch
+    - name: containerImageTag
       type: string
-      default: main
+    - name: gitBranch
+      type: string
+    - name: gitRevision
+      type: string
+    - name: gitRepoName
+      type: string
     - name: noPush
       type: string
       default: ""
       description: |
         Decides whether the built docker image is pushed to the docker repo or not.
         Default is to push, unless “--no-push” is used.
-    - name: gitRepoName
-      type: string
     - name: containerRegistry
       type: string
-    - name: revision
-      type: string
-      default: refs/heads/main
+
 
   #
   #
@@ -47,7 +48,7 @@ spec:
         - name: url
           value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
         - name: revision
-          value: $(params.revision)
+          value: $(params.gitRevision)
         - name: depth
           value: "50"
         - name: subdirectory
@@ -208,7 +209,7 @@ spec:
         - name: distBranch
           value: $(params.distBranch)
         - name: imageTag
-          value: $(params.distBranch)
+          value: $(params.containerImageTag)
         - name: containerRegistry
           value: $(params.containerRegistry)
         - name: aggregateTasksStatus
