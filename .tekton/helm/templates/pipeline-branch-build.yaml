@@ -18,9 +18,6 @@ spec:
     - name: distBranch
       type: string
       default: main
-    - name: refspec
-      type: string
-      default: +refs/heads/main:refs/heads/main
     - name: noPush
       type: string
       default: ""
@@ -31,6 +28,9 @@ spec:
       type: string
     - name: containerRegistry
       type: string
+    - name: revision
+      type: string
+      default: refs/heads/main
 
   #
   #
@@ -47,9 +47,7 @@ spec:
         - name: url
           value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
         - name: revision
-          value: $(params.distBranch)
-        - name: refspec
-          value: $(params.refspec)
+          value: $(params.revision)
         - name: depth
           value: "50"
         - name: subdirectory
@@ -70,8 +68,6 @@ spec:
           value: git@github.ibm.com:cics-samples/samples-build-infrastructure.git
         - name: revision
           value: main # Always the main branch
-        - name: refspec
-          value: ""
         - name: depth
           value: "1"
         - name: subdirectory
@@ -177,8 +173,6 @@ spec:
           value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
         - name: revision
           value: $(params.distBranch)
-        - name: refspec
-          value: $(params.refspec)
         - name: repoName
           value: $(params.gitRepoName)
         - name: gitSubDir
