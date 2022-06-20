@@ -206,8 +206,8 @@ spec:
       params:
         - name: imageName
           value: $(params.gitRepoName)
-        - name: distBranch
-          value: $(params.distBranch)
+        - name: gitBranch
+          value: $(params.gitBranch)
         - name: imageTag
           value: $(params.containerImageTag)
         - name: containerRegistry
