@@ -173,7 +173,7 @@ spec:
         - name: url
           value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
         - name: revision
-          value: $(params.distBranch)
+          value: $(params.gitRevision)
         - name: repoName
           value: $(params.gitRepoName)
         - name: gitSubDir
