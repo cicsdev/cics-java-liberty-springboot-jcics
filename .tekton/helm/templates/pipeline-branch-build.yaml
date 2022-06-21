@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: samples-{{ .Values.gitRepoName }}-{{ .Values.branch }}-build
+  name: {{ .Values.argoAppName }}-build
 #
 #
 #
@@ -215,7 +215,7 @@ spec:
         - name: aggregateTasksStatus
           value: $(tasks.status)
         - name: deploymentName
-          value: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+          value: {{ .Values.argoAppName }}
         - name: workingDir
           value: /workspace/git/$(params.gitRepoName)
         - name: dockerFile

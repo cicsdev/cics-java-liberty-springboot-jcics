@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+  name: {{ .Values.argoAppName }}
   labels:
-    app: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+    app: {{ .Values.argoAppName }}
 spec:
   replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+      app: {{ .Values.argoAppName }}
   template:
     metadata:
       labels:
-        app: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+        app: {{ .Values.argoAppName }}
     spec:
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
-      - name: {{ .Values.applicationShortName }}
+      - name: {{ .Values.argoAppName }}
         image: {{ .Values.containerRegistry }}/{{ .Values.dockerImageName }}:{{ .Values.branch }}
         imagePullPolicy: Always
         env:

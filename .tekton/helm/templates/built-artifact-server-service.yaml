@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+  name: {{ .Values.argoAppName }}
   labels:
-    app: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+    app: {{ .Values.argoAppName }}
 spec:
   type: ClusterIP
   selector:
-    app: {{ .Values.applicationShortName }}-{{ .Values.branch }}
+    app: {{ .Values.argoAppName }}
   ports:
   - port: 80
     targetPort: 80
