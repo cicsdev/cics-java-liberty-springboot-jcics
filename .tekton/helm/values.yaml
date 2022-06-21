@@ -1,5 +1,5 @@
 # The git branch we are serving up built artifacts for.
-branch: bob
+gitBranch: main
 
 # The URL for the application is of the form: baseUrlPath/gitBranchName
 baseUrlPath: samples-cics-java-liberty-springboot-jcics
