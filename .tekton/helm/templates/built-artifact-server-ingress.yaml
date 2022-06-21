@@ -19,5 +19,5 @@ spec:
                 name: {{ .Values.argoAppName }}
                 port:
                   number: 80
-            path: /{{ .Values.baseUrlPath }}/{{ .Values.branch}}
+            path: /{{ .Values.baseUrlPath }}/{{ .Values.containerImageTag }}
             pathType: Prefix
