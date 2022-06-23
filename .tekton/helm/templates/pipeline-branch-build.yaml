@@ -43,7 +43,7 @@ spec:
   #
   tasks:
 
-    - name: send-pending-to-github
+    - name: send-building-status-to-github
       taskRef:
         kind: Task
         name: task-send-status-to-github-enterprise
@@ -68,12 +68,36 @@ spec:
           value: "building..."
 
     #
+    # Clone the build infrastructure repo into our workspace.
+    #
+    - name: clone-build-infrastructure-repo
+      taskRef:
+        kind: Task
+        name: git-clone
+      runAfter:
+        - send-building-status-to-github
+      params:
+        - name: url
+          value: git@github.ibm.com:cics-samples/samples-build-infrastructure.git
+        - name: revision
+          value: main # Always the main branch
+        - name: depth
+          value: "1"
+        - name: subdirectory
+          value: samples-build-infrastructure
+      workspaces:
+        - name: output
+          workspace: git-workspace
+
+    #
     # Clone the sample repo source code into our workspace.
     #
     - name: clone-sample-repo
       taskRef:
         kind: Task
         name: git-clone
+      runAfter:
+        - clone-build-infrastructure-repo
       params:
         - name: url
           value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
@@ -87,25 +111,7 @@ spec:
         - name: output
           workspace: git-workspace
 
-    #
-    # Clone the build infrastructure repo into our workspace.
-    #
-    - name: clone-build-infrastructure-repo
-      taskRef:
-        kind: Task
-        name: git-clone
-      params:
-        - name: url
-          value: git@github.ibm.com:cics-samples/samples-build-infrastructure.git
-        - name: revision
-          value: main # Always the main branch
-        - name: depth
-          value: "1"
-        - name: subdirectory
-          value: samples-build-infrastructure
-      workspaces:
-        - name: output
-          workspace: git-workspace
+    
 
     #
     # Build using open jdk 1.8 using maven
