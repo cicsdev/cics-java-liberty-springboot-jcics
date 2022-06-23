@@ -253,7 +253,7 @@ spec:
         - name: gitRepoName
           value: $(params.gitRepoName)
 
-    - name: send-pending-to-github
+    - name: send-end-state-to-github
       taskRef:
         kind: Task
         name: task-send-status-to-github-enterprise
