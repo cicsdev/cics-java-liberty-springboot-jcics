@@ -43,27 +43,27 @@ spec:
   #
   tasks:
 
-    # - name: send-pending-to-github
-    #   taskref:
-    #     kind: Task
-    #     name: task-send-status-to-github-enterprise
-    #   params:
-    #     - name: containerRegistry
-    #       value: $(params.containerRegistry)
-    #     - name: gitHubUrl
-    #       value: https://api.github.ibm.com
-    #     - name: buildType
-    #       value: $(params.buildType)
-    #     - name: gitRevision
-    #       value: $(params.gitRevision)
-    #     - name: gitRepoName
-    #       value: $(params.gitRepoName)
-    #     - name: gitRepoFullName
-    #       value: $(params.gitRepoFullName)
-    #     - name: pullReqNumber
-    #       value: $(params.pullReqNumber)
-    #     - name: buildStatus
-    #       value: "pending"
+    - name: send-pending-to-github
+      taskref:
+        kind: Task
+        name: task-send-status-to-github-enterprise
+      params:
+        - name: containerRegistry
+          value: $(params.containerRegistry)
+        - name: gitHubUrl
+          value: https://api.github.ibm.com
+        - name: buildType
+          value: $(params.buildType)
+        - name: gitRevision
+          value: $(params.gitRevision)
+        - name: gitRepoName
+          value: $(params.gitRepoName)
+        - name: gitRepoFullName
+          value: $(params.gitRepoFullName)
+        - name: pullReqNumber
+          value: $(params.pullReqNumber)
+        - name: buildStatus
+          value: "pending"
 
     #
     # Clone the sample repo source code into our workspace.
