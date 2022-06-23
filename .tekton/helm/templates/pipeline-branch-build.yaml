@@ -44,7 +44,7 @@ spec:
   tasks:
 
     - name: send-pending-to-github
-      taskref:
+      taskRef:
         kind: Task
         name: task-send-status-to-github-enterprise
       params:
