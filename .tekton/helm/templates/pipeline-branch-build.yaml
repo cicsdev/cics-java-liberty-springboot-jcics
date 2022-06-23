@@ -259,29 +259,29 @@ spec:
         - name: gitRepoName
           value: $(params.gitRepoName)
 
-    - name: send-end-state-to-github
-      taskRef:
-        kind: Task
-        name: task-send-status-to-github-enterprise
-      params:
-        - name: containerRegistry
-          value: $(params.containerRegistry)
-        - name: gitHubUrl
-          value: https://api.github.ibm.com
-        - name: buildType
-          value: $(params.buildType)
-        - name: gitRevision
-          value: $(params.gitRevision)
-        - name: gitRepoName
-          value: $(params.gitRepoName)
-        - name: gitRepoFullName
-          value: $(params.gitRepoFullName)
-        - name: pullReqNumber
-          value: $(params.pullReqNumber)
-        - name: buildStatus
-          value: $(tasks.status)
-        - name: statusComment
-          value: "completed"
+    # - name: send-end-state-to-github
+    #   taskRef:
+    #     kind: Task
+    #     name: task-send-status-to-github-enterprise
+    #   params:
+    #     - name: containerRegistry
+    #       value: $(params.containerRegistry)
+    #     - name: gitHubUrl
+    #       value: https://api.github.ibm.com
+    #     - name: buildType
+    #       value: $(params.buildType)
+    #     - name: gitRevision
+    #       value: $(params.gitRevision)
+    #     - name: gitRepoName
+    #       value: $(params.gitRepoName)
+    #     - name: gitRepoFullName
+    #       value: $(params.gitRepoFullName)
+    #     - name: pullReqNumber
+    #       value: $(params.pullReqNumber)
+    #     - name: buildStatus
+    #       value: $(tasks.status)
+    #     - name: statusComment
+    #       value: "completed"
 
       workspaces:
         - name: git-workspace
