@@ -23,6 +23,8 @@ spec:
       type: string
     - name: gitRepoName
       type: string
+    - name: gitRepoFullName
+      type: string
     - name: noPush
       type: string
       default: ""
@@ -31,12 +33,38 @@ spec:
         Default is to push, unless “--no-push” is used.
     - name: containerRegistry
       type: string
-
+    - name: buildType
+      type: string
+    - name: pullReqNumber
+      type: string
 
   #
   #
   #
   tasks:
+
+    - name: send-pending-to-github
+      taskref:
+        kind: Task
+        name: task-send-status-to-github-enterprise
+      params:
+        - name: containerRegistry
+          value: $(params.containerRegistry)
+        - name: gitHubUrl
+          value: https://api.github.ibm.com
+        - name: buildType
+          value: $(params.buildType)
+        - name: gitRevision
+          value: $(params.gitRevision)
+        - name: gitRepoName
+          value: $(params.gitRepoName)
+        - name: gitRepoFullName
+          value: $(params.gitRepoFullName)
+        - name: pullReqNumber
+          value: $(params.pullReqNumber)
+        - name: buildStatus
+          value: "pending"
+
     #
     # Clone the sample repo source code into our workspace.
     #
