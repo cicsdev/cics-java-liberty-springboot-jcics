@@ -67,27 +67,27 @@ spec:
         - name: statusComment
           value: "building..."
 
-    #
-    # Clone the build infrastructure repo into our workspace.
-    #
-    - name: clone-build-infrastructure-repo
-      taskRef:
-        kind: Task
-        name: git-clone
-      runAfter:
-        - send-building-status-to-github
-      params:
-        - name: url
-          value: git@github.ibm.com:cics-samples/samples-build-infrastructure.git
-        - name: revision
-          value: main # Always the main branch
-        - name: depth
-          value: "1"
-        - name: subdirectory
-          value: samples-build-infrastructure
-      workspaces:
-        - name: output
-          workspace: git-workspace
+    # #
+    # # Clone the build infrastructure repo into our workspace.
+    # #
+    # - name: clone-build-infrastructure-repo
+    #   taskRef:
+    #     kind: Task
+    #     name: git-clone
+    #   runAfter:
+    #     - send-building-status-to-github
+    #   params:
+    #     - name: url
+    #       value: git@github.ibm.com:cics-samples/samples-build-infrastructure.git
+    #     - name: revision
+    #       value: main # Always the main branch
+    #     - name: depth
+    #       value: "1"
+    #     - name: subdirectory
+    #       value: samples-build-infrastructure
+    #   workspaces:
+    #     - name: output
+    #       workspace: git-workspace
 
     #
     # Clone the sample repo source code into our workspace.
@@ -96,8 +96,6 @@ spec:
       taskRef:
         kind: Task
         name: git-clone
-      runAfter:
-        - clone-build-infrastructure-repo
       params:
         - name: url
           value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
@@ -134,9 +132,9 @@ spec:
           workspace: git-workspace
 
     #
-    # Build using open jdk 18 using maven
+    # Build using ibm semeru jdk 11 using maven
     #
-    - name: build-maven-openjdk-18
+    - name: build-maven-ibm-semeru-11
       taskRef:
         kind: Task
         name: task-samples-jcics-maven
@@ -146,7 +144,27 @@ spec:
         - name: gitSubDir
           value: $(params.gitRepoName)
         - name: mavenImageTag
-          value: 3.8.5-openjdk-18
+          value: 3.8.6-ibm-semeru-11-focal
+        - name: containerRegistry
+          value: $(params.containerRegistry)
+      workspaces:
+        - name: git-workspace
+          workspace: git-workspace
+
+    #
+    # Build using ibm semeru jdk 17 using maven
+    #
+    - name: build-maven-ibm-semeru-17
+      taskRef:
+        kind: Task
+        name: task-samples-jcics-maven
+      runAfter:
+        - clone-sample-repo
+      params:
+        - name: gitSubDir
+          value: $(params.gitRepoName)
+        - name: mavenImageTag
+          value: 3.8.6-ibm-semeru-17-focal
         - name: containerRegistry
           value: $(params.containerRegistry)
       workspaces:
@@ -174,9 +192,9 @@ spec:
           workspace: git-workspace
 
     #
-    # Build using open jdk 18 using gradle
+    # Build using jdk 11 using gradle
     #
-    - name: build-gradle-openjdk-18
+    - name: build-gradle-jdk-11
       taskRef:
         kind: Task
         name: task-samples-jcics-gradle
@@ -186,7 +204,27 @@ spec:
         - name: gitSubDir
           value: $(params.gitRepoName)
         - name: gradleImageTag
-          value: 7.4.2-jdk18
+          value: 7.4.2-jdk11
+        - name: containerRegistry
+          value: $(params.containerRegistry)
+      workspaces:
+        - name: git-workspace
+          workspace: git-workspace
+
+    #
+    # Build using jdk 17 using gradle
+    #
+    - name: build-gradle-jdk-17
+      taskRef:
+        kind: Task
+        name: task-samples-jcics-gradle
+      runAfter:
+        - clone-sample-repo
+      params:
+        - name: gitSubDir
+          value: $(params.gitRepoName)
+        - name: gradleImageTag
+          value: 7.4.2-jdk17
         - name: containerRegistry
           value: $(params.containerRegistry)
       workspaces:
@@ -239,6 +277,9 @@ spec:
       taskRef:
         kind: Task
         name: task-artifact-server-builder
+      workspaces:
+        - name: git-workspace
+          workspace: git-workspace
       params:
         - name: imageName
           value: $(params.gitRepoName)
