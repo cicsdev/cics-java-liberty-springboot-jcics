@@ -96,6 +96,8 @@ spec:
       taskRef:
         kind: Task
         name: git-clone
+      runAfter:
+        - send-building-status-to-github
       params:
         - name: url
           value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
@@ -234,10 +236,10 @@ spec:
     #
     # Stamp the git hash into the image so we can tell what level of source built the artifacts.
     #
-    - name: gather-build-provenance
+    - name: gather-build-report
       taskRef:
         kind: Task
-        name: task-gather-build-provenance
+        name: task-create-build-report
       runAfter:
         - clone-sample-repo
       workspaces:
@@ -324,7 +326,4 @@ spec:
         - name: statusComment
           value: "completed"
 
-      workspaces:
-        - name: git-workspace
-          workspace: git-workspace
 
