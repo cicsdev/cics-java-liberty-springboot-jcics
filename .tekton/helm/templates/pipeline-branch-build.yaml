@@ -245,6 +245,8 @@ spec:
       workspaces:
         - name: git-workspace
           workspace: git-workspace
+        - name: temp
+          emptyDir: {}
       params:
         - name: url
           value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
