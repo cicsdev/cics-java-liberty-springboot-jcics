@@ -9,5 +9,4 @@ For those with permissions to access IBM internal systems only.
 https://javadev-cicsk8s.hursley.ibm.com/samples-cics-java-liberty-springboot-jcics/main/)
 
 - [Build logs](https://javadev-cicsk8s.hursley.ibm.com/samples-cics-java-liberty-springboot-jcics/main/build-info/logs/)
-- [Latest build provenance](https://javadev-cicsk8s.hursley.ibm.com/samples-cics-java-liberty-springboot-jcics/main/build-info/provenance.txt)
-- [Built artifacts](https://javadev-cicsk8s.hursley.ibm.com/samples-cics-java-liberty-springboot-jcics/main/prod/)
+- [Built artifacts](https://javadev-cicsk8s.hursley.ibm.com/samples-cics-java-liberty-springboot-jcics/main/artiifacts/)
