@@ -6,6 +6,7 @@ plugins
 	id 'eclipse'
 	id 'idea'
 	id 'war'
+    id 'maven-publish'
 }
 
 group = 'com.ibm.cicsdev.springboot'
@@ -33,14 +34,42 @@ repositories
 dependencies 
 {
     // Spring Boot web starter
-    implementation("org.springframework.boot:spring-boot-starter-web")	
+    implementation("org.springframework.boot:spring-boot-starter-web:2.7.1")	
 
     // Don't include Tomcat in the runtime build, but do put it in WEB-INF so it can be run standalone as well as embedded
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat:2.7.1")
 
     // CICS TS V5.5 Maven BOM (as of 19th May 2020)
     compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:5.5-20200519131930-PH25409")
 
     // Don't include JCICS in the final build (no need for version because we have BOM)
     compileOnly("com.ibm.cics:com.ibm.cics.server") 
+}
+
+
+publishing {
+    publications {
+    	// Publication for JCICS
+        maven(MavenPublication) {
+            groupId "${group}"
+            version "${version}"
+            artifactId "${archivesBaseName}" 
+            artifact bootWar
+        }
+    }
+    
+    // Configure the Maven repository to publish to somewhere which is configurable
+    // with environment variables from outside gradle.
+    //
+    // For example:
+    //   gradle build publish \
+    //   -Ppublish_repo_releases_url="file://my-folder" \
+    //   -Ppublish_repo_releases_name="my-maven-repo"
+    //
+    repositories {
+        maven {
+            url = "${publish_repo_releases_url}/${publish_repo_releases_name}"
+        }
+    }
+
 }
