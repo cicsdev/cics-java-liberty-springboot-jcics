@@ -71,7 +71,7 @@
   using the -D flag syntax 
   
   for example:
-  -Dpublish_repo_snapshots-name=my-repo 
+  -Dpublish_repo_snapshots_name=my-repo 
   -->
   <distributionManagement>
     <snapshotRepository>
