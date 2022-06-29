@@ -1,7 +1,6 @@
 # cics-java-liberty-springboot-jcics
 
 
-
 This sample provides a Spring Boot application that uses the JCICS TSQ Java API to provide a RESTful CICS temporary storage queue (TSQ) browsing service. The sample also provides a set of Maven and Gradle build files 
 for use either in Eclipse or standalone build environments.
 
@@ -167,3 +166,5 @@ The example application is divided into four services which perform actions on a
 
 ## License
 This project is licensed under [Eclipse Public License - v 2.0](LICENSE).
+
+
