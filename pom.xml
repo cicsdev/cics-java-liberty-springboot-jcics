@@ -71,16 +71,16 @@
   using the -D flag syntax 
   
   for example:
-  -Dpublish-repo-snapshots-name=my-repo 
+  -Dpublish_repo_snapshots-name=my-repo 
   -->
   <distributionManagement>
     <snapshotRepository>
-      <id>${publish-repo-snapshots-name}</id>
-      <url>${publish-repo-snapshots-url}</url>
+      <id>${publish_repo_snapshots_name}</id>
+      <url>${publish_repo_snapshots_url}</url>
     </snapshotRepository>
     <repository>
-      <id>${publish-repo-releases-name}</id>
-      <url>${publish-repo-releases-url}</url>
+      <id>${publish_repo_releases_name}</id>
+      <url>${publish_repo_releases_url}</url>
     </repository>
   </distributionManagement>
 
