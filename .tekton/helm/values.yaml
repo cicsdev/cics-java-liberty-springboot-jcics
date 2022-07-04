@@ -11,7 +11,7 @@ argoAppName: cics-java-liberty-springboot-jcics
 dockerImageName: "cics-java-dev/samples/cics-java-liberty-springboot-jcics"
 
 # The tag used at the end of the container image full name.
-containerImageTag: "bob"
+containerImageTag: "main"
 
 # The name of the git repository
 gitRepoName: cics-java-liberty-springboot-jcics
