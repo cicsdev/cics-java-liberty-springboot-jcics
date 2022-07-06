@@ -71,7 +71,7 @@ spec:
           value: $(params.gitTagName)
       
       workspaces:
-        - name: output
+        - name: git-workspace
           workspace: git-workspace
 
 
