@@ -15,10 +15,6 @@ spec:
   #
   #
   params:
-    - name: containerImageTag
-      type: string
-    - name: gitBranch
-      type: string
     - name: gitRevision
       type: string
     - name: gitRepoName
@@ -27,10 +23,9 @@ spec:
       type: string
     - name: containerRegistry
       type: string
-    - name: buildType
-      type: string
     - name: gitTagName
       type: string
+
 
   #
   #
