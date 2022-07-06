@@ -55,7 +55,7 @@ spec:
     - name: publish-to-public-github
       taskRef:
         kind: Task
-        name: git-tag-publish
+        name: task-git-tag-publish
       runAfter:
         - clone-sample-repo
       params:
