@@ -5,7 +5,7 @@ gitBranch: main
 baseUrlPath: samples-cics-java-liberty-springboot-jcics
 
 # The base name for kube resources to make them small enough.
-argoAppName: cics-java-liberty-springboot-jcics
+argoAppName: samples-cjl-spring-jcics
 
 # The path of the docker image into our docker registry.
 dockerImageName: "cics-java-dev/samples/cics-java-liberty-springboot-jcics"

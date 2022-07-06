@@ -1,0 +1,86 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: {{ .Values.argoAppName }}-publish
+#
+#
+#
+spec:
+  #
+  #
+  #
+  workspaces:
+    - name: git-workspace
+  #
+  #
+  #
+  params:
+    - name: containerImageTag
+      type: string
+    - name: gitBranch
+      type: string
+    - name: gitRevision
+      type: string
+    - name: gitRepoName
+      type: string
+    - name: gitRepoFullName
+      type: string
+    - name: containerRegistry
+      type: string
+    - name: buildType
+      type: string
+    - name: gitTagName
+      type: string
+
+  #
+  #
+  #
+  tasks:
+
+    #
+    # Clone the sample repo source code into our workspace.
+    #
+    - name: clone-sample-repo
+      taskRef:
+        kind: Task
+        name: git-clone
+      params:
+        - name: url
+          value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
+        - name: revision
+          value: $(params.gitRevision)
+        - name: depth
+          value: "50"
+        - name: subdirectory
+          value: $(params.gitRepoName)
+      workspaces:
+        - name: output
+          workspace: git-workspace
+
+    - name: publish-to-public-github
+      taskRef:
+        kind: Task
+        name: git-tag-publish
+      runAfter:
+        - clone-sample-repo
+      params:
+        - name: gitRepoName
+          value: $(params.gitRepoName)
+        - name: gitOrgName
+          value: techcobweb
+          # Note: cicsdev is the external organisation name we want to publish to.
+          # techcobweb is the public github one owned by mcobbett for testing.
+        - name: containerRegistry
+          value: $(params.containerRegistry)
+        - name: gitTagName
+          value: $(params.gitTagName)
+      
+      workspaces:
+        - name: output
+          workspace: git-workspace
+
+
+
+
+
+
