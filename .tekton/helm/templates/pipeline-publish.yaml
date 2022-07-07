@@ -42,8 +42,8 @@ spec:
       params:
         - name: url
           value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
-        # - name: revision
-        #   value: $(params.gitTagName)
+        - name: revision
+          value: $(params.gitTagName)
         # Optional - defaults to ""
         - name: depth
           value: "1"
