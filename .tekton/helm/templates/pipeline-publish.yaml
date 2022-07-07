@@ -50,7 +50,7 @@ spec:
         - name: subdirectory
           value: $(params.gitRepoName)
         - name: refspec
-          value: refs/heads/*
+          value: refs/tags/$(params.gitTagName)
       workspaces:
         - name: output
           workspace: git-workspace
