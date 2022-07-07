@@ -43,14 +43,13 @@ spec:
         - name: url
           value: git@github.ibm.com:cics-samples/$(params.gitRepoName).git
         - name: revision
-          value: refs/tags/$(params.gitTagName)
-        # Optional - defaults to ""
+          value: $(params.gitTagName)
         - name: depth
-          value: "1"
+          value: "99999999"
         - name: subdirectory
           value: $(params.gitRepoName)
         - name: refspec
-          value: refs/tags/$(params.gitTagName)
+          value: +refs/tags/$(params.gitTagName):refs/tags/$(params.gitTagName)
       workspaces:
         - name: output
           workspace: git-workspace
