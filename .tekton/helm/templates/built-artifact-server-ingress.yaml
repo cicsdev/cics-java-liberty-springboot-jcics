@@ -8,10 +8,9 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - javadev-cicsk8s.hursley.ibm.com
-      secretName: javadev-cert
+        - "*.cicsk8s.hursley.ibm.com"
   rules:
-    - host: javadev-cicsk8s.hursley.ibm.com
+    - host: {{ .Values.argoAppName }}-cics-java-dev.cicsk8s.hursley.ibm.com
       http:
         paths:
           - backend:
