@@ -1,5 +1,5 @@
-<project 
-  xmlns="http://maven.apache.org/POM/4.0.0" 
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -10,17 +10,22 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.7.0</version>
   </parent>
- 
+
   <!-- Application properties -->
   <groupId>com.ibm.cicsdev.springboot</groupId>
   <artifactId>cics-java-liberty-springboot-jcics</artifactId>
   <version>0.1.0</version>
   <name>cics-java-liberty-springboot-jcics</name>
-  <description>Demo JCICS project for Spring Boot</description>
+  <description>CICS Spring Boot Appliaction - JCICS Example</description>
+
   <properties>
     <java.version>1.8</java.version>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
   </properties>
-  
+
   <!-- CICS TS V5.5 BOM (as of May 2020) -->
   <dependencyManagement>
     <dependencies>
@@ -33,29 +38,30 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-    
-  <dependencies>       
-    <!-- Compile against, but don't include JCICS in the final build (version and scope are from BOM) -->
+
+  <dependencies>
+    <!-- Compile against, but don't include JCICS in the final build (version and scope are from
+    BOM) -->
     <dependency>
       <groupId>com.ibm.cics</groupId>
       <artifactId>com.ibm.cics.server</artifactId>
     </dependency>
-   
-    <!-- Spring Boot web support -->   
+
+    <!-- Spring Boot web support -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-    </dependency> 
-   
-    <!-- Compile against, but don't include Tomcat in the runtime build --> 
+    </dependency>
+
+    <!-- Compile against, but don't include Tomcat in the runtime build -->
     <dependency>
-	  <groupId>org.springframework.boot</groupId>
-	  <artifactId>spring-boot-starter-tomcat</artifactId>
-	  <scope>provided</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
-    
-  <!-- Package as an executable war (default is jar) -->  
+
+  <!-- Package as an executable war (default is jar) -->
   <packaging>war</packaging>
   <build>
     <plugins>
@@ -65,8 +71,8 @@
       </plugin>
     </plugins>
   </build>
-    
-    <!-- 
+
+  <!-- 
     Publishes artifacts to here if the deploy goal is used. 
 
     The values here can be passed on the maven command line
@@ -75,15 +81,15 @@
     for example:
     -Dpublish_repo_snapshots_name=my-repo 
     -->
-    <distributionManagement>
-        <snapshotRepository>
-            <id>${publish_repo_snapshots_name}</id>
-            <url>${publish_repo_snapshots_url}</url>
-        </snapshotRepository>
-        <repository>
-            <id>${publish_repo_releases_name}</id>
-            <url>${publish_repo_releases_url}</url>
-        </repository>
-    </distributionManagement>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>${publish_repo_snapshots_name}</id>
+      <url>${publish_repo_snapshots_url}</url>
+    </snapshotRepository>
+    <repository>
+      <id>${publish_repo_releases_name}</id>
+      <url>${publish_repo_releases_url}</url>
+    </repository>
+  </distributionManagement>
 
 </project>
