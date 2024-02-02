@@ -38,3 +38,8 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn --batch-mode --update-snapshots --file pom.xml -Djava.version=${{ matrix.jdk }} package
+    - run: mkdir staging && cp target/*.war staging
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Maven Package (Java ${{ matrix.jdk }})
+        path: staging
