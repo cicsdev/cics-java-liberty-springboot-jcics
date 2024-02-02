@@ -16,7 +16,7 @@
   <artifactId>cics-java-liberty-springboot-jcics</artifactId>
   <version>0.1.0</version>
   <name>cics-java-liberty-springboot-jcics</name>
-  <description>CICS Spring Boot Appliaction - JCICS Example</description>
+  <description>CICS Spring Boot Application - JCICS Example</description>
 
   <properties>
     <java.version>1.8</java.version>
