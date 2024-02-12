@@ -1,5 +1,5 @@
 # cics-java-liberty-springboot-jcics
-
+[![Build](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/java.yml/badge.svg)](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/java.yml)
 
 This sample provides a Spring Boot application that uses the JCICS TSQ Java API to provide a RESTful CICS temporary storage queue (TSQ) browsing service. The sample also provides a set of Maven and Gradle build files for use either in Eclipse or standalone build environments.
 
