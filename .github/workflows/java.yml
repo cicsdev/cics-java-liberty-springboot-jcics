@@ -48,7 +48,7 @@ jobs:
         run: ./mvnw --batch-mode --update-snapshots --file pom.xml -Djava.version=${{ matrix.jdk }} package
 
   build-gradle:
-    name: Build Gradle
+    name: Build Gradle wrapper
     
     runs-on: ubuntu-latest
     strategy:
@@ -56,13 +56,14 @@ jobs:
          jdk: [8, 11, 17]
          
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up JDK ${{ matrix.jdk }}
       uses: actions/setup-java@v4
       with:
         java-version: ${{ matrix.jdk }}
         distribution: 'semeru'
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
-      with:
-        arguments: bootWar -Pjava_version=${{ matrix.jdk }}
+      run: ./gradlew build bootWar -Pjava_version=${{ matrix.jdk }}
+
