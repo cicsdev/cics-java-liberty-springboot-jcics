@@ -28,15 +28,6 @@ repositories
 	mavenCentral()
 }
 
-java
-{
-    toolchain
-    {
-        languageVersion = JavaLanguageVersion.of(java_version)
-        vendor = JvmVendorSpec.IBM
-        implementation = JvmImplementation.J9
-    }
-}
 
 dependencies 
 {
