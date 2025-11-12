@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.0</version>
+    <version>3.3.5</version>
   </parent>
 
   <!-- Application properties -->
@@ -19,7 +19,7 @@
   <description>CICS Spring Boot Application - JCICS Example</description>
 
   <properties>
-    <java.version>1.8</java.version>
+    <java.version>17</java.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -32,7 +32,7 @@
       <dependency>
         <groupId>com.ibm.cics</groupId>
         <artifactId>com.ibm.cics.ts.bom</artifactId>
-        <version>5.5-20200519131930-PH25409</version>
+        <version>6.1-20240903141936-PH59389</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -43,15 +43,14 @@
     <!-- Compile against, but don't include JCICS in the final build (version and scope are from
     BOM) -->
     <dependency>
-      <groupId>com.ibm.cics</groupId>
-      <artifactId>com.ibm.cics.server</artifactId>
-    </dependency>
-
-    <!-- Spring Boot web support -->
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+    <dependency>
+	        <groupId>com.ibm.cics</groupId>
+	        <artifactId>com.ibm.cics.server</artifactId>
+ </dependency>
+
 
     <!-- Compile against, but don't include Tomcat in the runtime build -->
     <dependency>

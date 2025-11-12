@@ -1,7 +1,7 @@
 plugins
 {
-    id 'org.springframework.boot' version '2.7.0'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.5'
 	id 'java'
 	id 'eclipse'
 	id 'idea'
@@ -13,6 +13,17 @@ group = 'com.ibm.cicsdev.springboot'
 archivesBaseName='cics-java-liberty-springboot-jcics'
 version = '0.1.0'
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+
 // If in Eclipse, add Javadoc to the local project classpath
 eclipse
 {
@@ -22,40 +33,55 @@ eclipse
     }
 }
 
-
-repositories
-{
-	mavenCentral()
+repositories {
+    mavenCentral()
+    maven {
+        url "https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/maven/repository/"
+    }
 }
 
-
-dependencies 
-{
-    // Spring Boot web starter
-    implementation("org.springframework.boot:spring-boot-starter-web")	
-
-    // Don't include Tomcat in the runtime build, but do put it in WEB-INF so it can be run standalone as well as embedded
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
-    // CICS TS V5.5 Maven BOM (as of 19th May 2020)
-    compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:5.5-20200519131930-PH25409")
+    // Use correct BOM version for CICS TS
+    compileOnly(enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:6.2-20250528120756-PH65227"))
 
-    // Don't include JCICS in the final build (no need for version because we have BOM)
-    compileOnly("com.ibm.cics:com.ibm.cics.server") 
+    // JCICS API (version inherited from BOM)
+    compileOnly("com.ibm.cics:com.ibm.cics.server")
+
+    // Jakarta EE servlet API
+    compileOnly("jakarta.servlet:jakarta.servlet-api:6.0.0")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+tasks.named('bootWar') {
+    archiveBaseName.set("${archivesBaseName}")
+    archiveVersion.set("${version}")
+    launchScript() // optional: makes WAR self-executable
 }
 
-
+tasks.named('war') {
+    enabled = false // disable plain WAR, use bootWar instead
+}
 publishing {
     publications {
-    	// Publication for JCICS
         maven(MavenPublication) {
-            groupId "${group}"
-            version "${version}"
-            artifactId "${archivesBaseName}" 
-            artifact bootWar
+            groupId = group
+            artifactId = archivesBaseName
+            version = version
+            artifact tasks.named("bootWar").get().archiveFile
         }
     }
-    
+    repositories {
+        maven {
+            name = "localRepo"
+            url = uri("${buildDir}/repo")
+        }
+    }
+}
+
     // Configure the Maven repository to publish to somewhere which is configurable
     // with environment variables from outside gradle.
     //
@@ -64,10 +90,4 @@ publishing {
     //   -Ppublish_repo_releases_url="file://my-folder" \
     //   -Ppublish_repo_releases_name="my-maven-repo"
     //
-    repositories {
-        maven {
-            url = "${publish_repo_releases_url}/${publish_repo_releases_name}"
-        }
-    }
-
-}
+    
