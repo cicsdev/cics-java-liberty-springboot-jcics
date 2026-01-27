@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.3.5</version>
+    <version>3.5.9</version>
   </parent>
 
   <!-- Application properties -->
@@ -26,7 +26,7 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
   </properties>
 
-  <!-- CICS TS V5.5 BOM (as of May 2020) -->
+  <!-- CICS TS V6.1 BOM (as of May 2020) -->
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -40,12 +40,13 @@
   </dependencyManagement>
 
   <dependencies>
-    <!-- Compile against, but don't include JCICS in the final build (version and scope are from
-    BOM) -->
+   
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+     <!-- Compile against, but don't include JCICS in the final build (version and scope are from
+    BOM) -->
     <dependency>
 	        <groupId>com.ibm.cics</groupId>
 	        <artifactId>com.ibm.cics.server</artifactId>
