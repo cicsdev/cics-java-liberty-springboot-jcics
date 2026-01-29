@@ -56,14 +56,7 @@ version = '0.1.0'
 
 publishing 
 {
-    repositories 
-    {
-        maven 
-        {
-            name = "localRepo"
-            url = uri("${buildDir}/repo")
-        }
-    }
+ 
 }
     // Configure the Maven repository to publish to somewhere which is configurable
     // with environment variables from outside gradle.
