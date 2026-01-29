@@ -26,13 +26,13 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
   </properties>
 
-  <!-- CICS TS V6.1 BOM (as of May 2020) -->
+  <!-- CICS TS V6.1 BOM (as of Sept 2024) -->
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>com.ibm.cics</groupId>
         <artifactId>com.ibm.cics.ts.bom</artifactId>
-        <version>6.1-20240903141936-PH59389</version>
+        <version>6.1-20250812133513-PH63856</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
