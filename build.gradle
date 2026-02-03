@@ -39,8 +39,8 @@ dependencies
     // Tomcat provided by CICS Liberty at runtime
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     
-    // Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample).
-    // If you are running on a higher CICS TS version, you may replace this with a newer BOM.)
+    // Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample)
+    // If you are running on a higher CICS TS version, you may replace this with a newer BOM)
     compileOnly(enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:6.1-20250812133513-PH63856"))
     
     // JCICS API (version inherited from BOM)
