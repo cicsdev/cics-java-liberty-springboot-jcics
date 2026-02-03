@@ -1,17 +1,22 @@
-plugins
+
+ plugins
 {
-    id 'org.springframework.boot' version '2.7.0'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot' version '3.5.9'
+    id 'io.spring.dependency-management' version '1.1.7'
 	id 'java'
 	id 'eclipse'
 	id 'idea'
 	id 'war'
 	id 'maven-publish'
 }
-
 group = 'com.ibm.cicsdev.springboot'
 archivesBaseName='cics-java-liberty-springboot-jcics'
 version = '0.1.0'
+java
+{
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 // If in Eclipse, add Javadoc to the local project classpath
 eclipse
@@ -21,41 +26,38 @@ eclipse
         downloadJavadoc = true
     }
 }
-
-
 repositories
 {
-	mavenCentral()
+    mavenCentral()
+
 }
-
-
 dependencies 
 {
-    // Spring Boot web starter
-    implementation("org.springframework.boot:spring-boot-starter-web")	
-
-    // Don't include Tomcat in the runtime build, but do put it in WEB-INF so it can be run standalone as well as embedded
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-
-    // CICS TS V5.5 Maven BOM (as of 19th May 2020)
-    compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:5.5-20200519131930-PH25409")
-
-    // Don't include JCICS in the final build (no need for version because we have BOM)
-    compileOnly("com.ibm.cics:com.ibm.cics.server") 
-}
-
-
-publishing {
-    publications {
-    	// Publication for JCICS
-        maven(MavenPublication) {
-            groupId "${group}"
-            version "${version}"
-            artifactId "${archivesBaseName}" 
-            artifact bootWar
-        }
-    }
+    // Spring Boot web starter for building REST/HTTP endpoints
+    implementation("org.springframework.boot:spring-boot-starter-web")
     
+    // Tomcat provided by CICS Liberty at runtime
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    
+    // Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample).
+    // If you are running on a higher CICS TS version, you may replace this with a newer BOM.)
+    compileOnly(enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:6.1-20250812133513-PH63856"))
+    
+    // JCICS API (version inherited from BOM)
+    compileOnly("com.ibm.cics:com.ibm.cics.server")
+    
+
+}
+// Don't generate a FAT bootWar, we don't need to run standalone
+bootWar { enabled = false }
+group = 'com.ibm.cicsdev.springboot'
+archivesBaseName='cics-java-liberty-springboot-jcics'
+version = '0.1.0'
+
+publishing 
+{
+ 
+}
     // Configure the Maven repository to publish to somewhere which is configurable
     // with environment variables from outside gradle.
     //
@@ -64,10 +66,3 @@ publishing {
     //   -Ppublish_repo_releases_url="file://my-folder" \
     //   -Ppublish_repo_releases_name="my-maven-repo"
     //
-    repositories {
-        maven {
-            url = "${publish_repo_releases_url}/${publish_repo_releases_name}"
-        }
-    }
-
-}
