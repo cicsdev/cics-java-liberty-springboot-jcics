@@ -26,7 +26,7 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
   </properties>
 
-  <!-- CICS TS V6.1 BOM (as of Sept 2024) -->
+  <!-- CICS TS V6.1 BOM (as of Aug 2025) -->
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -45,13 +45,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-     <!-- Compile against, but don't include JCICS in the final build (version and scope are from
-    BOM) -->
+     <!-- Compile against, but don't include JCICS in the final build (version and scope are from BOM) -->
     <dependency>
 	        <groupId>com.ibm.cics</groupId>
 	        <artifactId>com.ibm.cics.server</artifactId>
- </dependency>
-
+    </dependency>
 
     <!-- Compile against, but don't include Tomcat in the runtime build -->
     <dependency>
