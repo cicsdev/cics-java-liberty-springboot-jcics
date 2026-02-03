@@ -26,12 +26,12 @@ For further details about the development of this sample refer to the tutorial [
 
 ### Check dependencies
  
-Before building this sample, you should verify that the correct CICS TS bill of materials (BOM) is specified for your target release of CICS. The BOM specifies a consistent set of artifacts, and adds information about their scope. In the example below the version specified is compatible with CICS TS V5.5 with JCICS APAR PH25409, or newer. That is, the Java byte codes built by compiling against this version of JCICS will be compatible with later CICS TS versions and subsequent JCICS APARs. 
+Before building this sample, you should verify that the correct CICS TS bill of materials (BOM) is specified for your target release of CICS. The BOM specifies a consistent set of artifacts, and adds information about their scope. In the example below the version specified is compatible with CICS TS V6.1 with JCICS APAR PH63856, or newer. That is, the Java byte codes built by compiling against this version of JCICS will be compatible with later CICS TS versions and subsequent JCICS APARs. 
 You can browse the published versions of the CICS BOM at [Maven Central.](https://mvnrepository.com/artifact/com.ibm.cics/com.ibm.cics.ts.bom)
  
 Gradle (build.gradle): 
 
-`compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:5.5-20200519131930-PH25409")`
+`compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:6.1-20250812133513-PH63856")`   
 
 Maven (POM.xml):
 
@@ -41,7 +41,7 @@ Maven (POM.xml):
       <dependency>
         <groupId>com.ibm.cics</groupId>
         <artifactId>com.ibm.cics.ts.bom</artifactId>
-        <version>5.5-20200519131930-PH25409</version>
+        <version>6.1-20250812133513-PH63856</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -108,9 +108,7 @@ This creates a WAR file inside the `target` directory.
 
 - Ensure you have the following features defined in your Liberty `server.xml`:           
     - `<servlet-3.1>` or `<servlet-4.0>` depending on the version of Java EE in use.  
-    - `<cicsts:security-1.0>` if CICS security is enabled.
-    	 
->**Note:** `servlet-4.0` will only work for CICS TS V5.5 or later
+    - `<cicsts:security-1.0>` if CICS security is enabled.    	 
     
 - Deployment option 1:
     - Copy and paste the built WAR from your *target* or *build/libs* directory into a Eclipse CICS bundle project and create a new WAR bundlepart that references the WAR file. Then deploy the CICS bundle project from CICS Explorer using the **Export Bundle Project to z/OS UNIX File System** wizard.
