@@ -8,9 +8,9 @@ For further details about the development of this sample refer to the tutorial [
 
 ## Requirements
 
-- CICS TS V5.3 or later
+- CICS TS V6.1 or later
 - A configured Liberty JVM server in CICS
-- Java SE 1.8 or later on the workstation
+- IBM Semeru Runtime Certified Edition Version 17.0 or later on the workstation
 - An Eclipse development environment on the workstation (optional)
 - Either Gradle or Apache Maven on the workstation (optional if using Wrappers)
 
