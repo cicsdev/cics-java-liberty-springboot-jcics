@@ -49,7 +49,7 @@ dependencies
 }
 
 //Don't generate a FAT bootWar, we don't need to run standalone
-//bootWar { enabled = false }
+bootWar { enabled = false }
 
 publishing 
 {
