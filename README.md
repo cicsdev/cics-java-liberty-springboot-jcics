@@ -10,7 +10,7 @@ For further details about the development of this sample refer to the tutorial [
 
 - CICS TS V6.1 or later
 - A configured Liberty JVM server in CICS
-- Jakarta EE 9.0 or later
+- Jakarta EE 10 or later
 - IBM Semeru Runtime Certified Edition Version 17.0 or later on the workstation
 - An Eclipse development environment on the workstation (optional)
 - Either Gradle or Apache Maven on the workstation (optional if using Wrappers)
@@ -108,7 +108,7 @@ This creates a WAR file inside the `target` directory.
 ## Deploying to a CICS Liberty JVM server
 
 - Ensure you have the following features defined in your Liberty `server.xml`:           
-    - `<servlet-5.0>` or later depending on the version of Jakarta EE in use.  
+    - `<servlet-6.0>` or later depending on the version of Jakarta EE in use.  
     - `<cicsts:security-1.0>` if CICS security is enabled.    	 
     
 - Deployment option 1:
