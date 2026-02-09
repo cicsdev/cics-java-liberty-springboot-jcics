@@ -10,12 +10,17 @@
 	id 'maven-publish'
 }
 group = 'com.ibm.cicsdev.springboot'
-archivesBaseName='cics-java-liberty-springboot-jcics'
 version = '0.1.0'
+
 java
 {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+
+base {
+	archivesName='cics-java-liberty-springboot-jcics'
 }
 
 // If in Eclipse, add Javadoc to the local project classpath
@@ -50,9 +55,6 @@ dependencies
 }
 // Don't generate a FAT bootWar, we don't need to run standalone
 bootWar { enabled = false }
-group = 'com.ibm.cicsdev.springboot'
-archivesBaseName='cics-java-liberty-springboot-jcics'
-version = '0.1.0'
 
 publishing 
 {
