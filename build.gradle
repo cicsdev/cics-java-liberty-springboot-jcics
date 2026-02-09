@@ -8,8 +8,14 @@ plugins
 	id 'war'
 	id 'maven-publish'
 }
+
 group = 'com.ibm.cicsdev.springboot'
 version = '0.1.0'
+
+base 
+{
+    archivesName = "cics-java-liberty-springboot-jcics" 
+}
 
 
 java
@@ -18,9 +24,6 @@ java
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-base {
-	archivesName='cics-java-liberty-springboot-jcics'
-}
 
 // If in Eclipse, add Javadoc to the local project classpath
 eclipse
@@ -30,11 +33,13 @@ eclipse
         downloadJavadoc = true
     }
 }
+
 repositories
 {
     mavenCentral()
 
 }
+
 dependencies 
 {
     // Spring Boot web starter for building REST/HTTP endpoints
@@ -56,9 +61,7 @@ bootWar { enabled = false }
 
 
 publishing 
-{
- 
-}
+{ 
     // Configure the Maven repository to publish to somewhere which is configurable
     // with environment variables from outside gradle.
     //
@@ -67,3 +70,4 @@ publishing
     //   -Ppublish_repo_releases_url="file://my-folder" \
     //   -Ppublish_repo_releases_name="my-maven-repo"
     //
+ }
