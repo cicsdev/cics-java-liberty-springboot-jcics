@@ -8,9 +8,10 @@ For further details about the development of this sample refer to the tutorial [
 
 ## Requirements
 
-- CICS TS V5.3 or later
+- CICS TS V6.1 or later
 - A configured Liberty JVM server in CICS
-- Java SE 1.8 or later on the workstation
+- Jakarta EE 10 or later
+- IBM Semeru Runtime Certified Edition Version 17.0 or later on the workstation
 - An Eclipse development environment on the workstation (optional)
 - Either Gradle or Apache Maven on the workstation (optional if using Wrappers)
 
@@ -26,12 +27,12 @@ For further details about the development of this sample refer to the tutorial [
 
 ### Check dependencies
  
-Before building this sample, you should verify that the correct CICS TS bill of materials (BOM) is specified for your target release of CICS. The BOM specifies a consistent set of artifacts, and adds information about their scope. In the example below the version specified is compatible with CICS TS V5.5 with JCICS APAR PH25409, or newer. That is, the Java byte codes built by compiling against this version of JCICS will be compatible with later CICS TS versions and subsequent JCICS APARs. 
+Before building this sample, you should verify that the correct CICS TS bill of materials (BOM) is specified for your target release of CICS. The BOM specifies a consistent set of artifacts, and adds information about their scope. In the example below the version specified is compatible with CICS TS V6.1 with JCICS APAR PH63856, or newer. That is, the Java byte codes built by compiling against this version of JCICS will be compatible with later CICS TS versions and subsequent JCICS APARs. 
 You can browse the published versions of the CICS BOM at [Maven Central.](https://mvnrepository.com/artifact/com.ibm.cics/com.ibm.cics.ts.bom)
  
 Gradle (build.gradle): 
 
-`compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:5.5-20200519131930-PH25409")`
+`compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:6.1-20250812133513-PH63856")`   
 
 Maven (POM.xml):
 
@@ -41,7 +42,7 @@ Maven (POM.xml):
       <dependency>
         <groupId>com.ibm.cics</groupId>
         <artifactId>com.ibm.cics.ts.bom</artifactId>
-        <version>5.5-20200519131930-PH25409</version>
+        <version>6.1-20250812133513-PH63856</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -58,7 +59,7 @@ On the command line, you simply swap the Gradle or Maven command for the wrapper
   
 For an IDE, taking Eclipse as an example, the plug-ins for Gradle *buildship* and Maven *m2e* will integrate with the "Run As..." capability, allowing you to specify whether you want to build the project with a Wrapper, or a specific version of your chosen build tool.
 
-The required build-tasks are typically `clean bootWar` for Gradle and `clean package` for Maven. Once run, Gradle will generate a WAR file in the `build/libs` directory, while Maven will generate it in the `target` directory.
+The required build-tasks are typically `clean build` for Gradle and `clean package` for Maven. Once run, Gradle will generate a WAR file in the `build/libs` directory, while Maven will generate it in the `target` directory.
 
 **Note:** When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
 
@@ -73,12 +74,12 @@ Run the following in a local command prompt:
 On Linux or Mac:
 
 ```shell
-./gradlew clean bootWar
+./gradlew clean build
 ```
 On Windows:
 
 ```shell
-gradlew.bat clean bootWar
+gradlew.bat clean build
 ```
 
 This creates a WAR file inside the `build/libs` directory.
@@ -107,10 +108,8 @@ This creates a WAR file inside the `target` directory.
 ## Deploying to a CICS Liberty JVM server
 
 - Ensure you have the following features defined in your Liberty `server.xml`:           
-    - `<servlet-3.1>` or `<servlet-4.0>` depending on the version of Java EE in use.  
-    - `<cicsts:security-1.0>` if CICS security is enabled.
-    	 
->**Note:** `servlet-4.0` will only work for CICS TS V5.5 or later
+    - `<servlet-6.0>` or later depending on the version of Jakarta EE in use.  
+    - `<cicsts:security-1.0>` if CICS security is enabled.    	 
     
 - Deployment option 1:
     - Copy and paste the built WAR from your *target* or *build/libs* directory into a Eclipse CICS bundle project and create a new WAR bundlepart that references the WAR file. Then deploy the CICS bundle project from CICS Explorer using the **Export Bundle Project to z/OS UNIX File System** wizard.
