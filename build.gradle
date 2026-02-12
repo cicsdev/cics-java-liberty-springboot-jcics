@@ -1,5 +1,4 @@
-
- plugins
+plugins
 {
     id 'org.springframework.boot' version '3.5.9'
     id 'io.spring.dependency-management' version '1.1.7'
@@ -9,8 +8,15 @@
 	id 'war'
 	id 'maven-publish'
 }
+
 group = 'com.ibm.cicsdev.springboot'
 version = '0.1.0'
+
+base 
+{
+    archivesName = "cics-java-liberty-springboot-jcics" 
+}
+
 
 java
 {
@@ -18,9 +24,6 @@ java
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-base {
-	archivesName='cics-java-liberty-springboot-jcics'
-}
 
 // If in Eclipse, add Javadoc to the local project classpath
 eclipse
@@ -30,11 +33,13 @@ eclipse
         downloadJavadoc = true
     }
 }
+
 repositories
 {
     mavenCentral()
 
 }
+
 dependencies 
 {
     // Spring Boot web starter for building REST/HTTP endpoints
@@ -43,23 +48,20 @@ dependencies
     // Tomcat provided by CICS Liberty at runtime
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     
-    // Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample).
-    // If you are running on a higher CICS TS version, you may replace this with a newer BOM.)
+    // Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample)
+    // If you are running on a higher CICS TS version, you may replace this with a newer BOM)
     compileOnly(enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:6.1-20250812133513-PH63856"))
     
     // JCICS API (version inherited from BOM)
-    compileOnly("com.ibm.cics:com.ibm.cics.server")
-    
-
+    compileOnly("com.ibm.cics:com.ibm.cics.server")    
 }
-// Don't generate a FAT bootWar, we don't need to run standalone
+
+//Don't generate a FAT bootWar, we don't need to run standalone
 bootWar { enabled = false }
 
 
 publishing 
-{
- 
-}
+{ 
     // Configure the Maven repository to publish to somewhere which is configurable
     // with environment variables from outside gradle.
     //
@@ -68,3 +70,4 @@ publishing
     //   -Ppublish_repo_releases_url="file://my-folder" \
     //   -Ppublish_repo_releases_name="my-maven-repo"
     //
+ }

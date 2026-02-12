@@ -20,13 +20,14 @@
 
   <properties>
     <java.version>17</java.version>
-
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.source>${java.version}</maven.compiler.source>    
+    <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
   </properties>
 
-  <!-- CICS TS V6.1 BOM (as of Sept 2024) -->
+  <!--Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample) -->
+  <!-- If you are running on a higher CICS TS version, you may replace this with a newer BOM) -->
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -45,13 +46,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-     <!-- Compile against, but don't include JCICS in the final build (version and scope are from
-    BOM) -->
+     <!-- Compile against, but don't include JCICS in the final build (version and scope are from BOM) -->
     <dependency>
 	        <groupId>com.ibm.cics</groupId>
 	        <artifactId>com.ibm.cics.server</artifactId>
- </dependency>
-
+    </dependency>
 
     <!-- Compile against, but don't include Tomcat in the runtime build -->
     <dependency>
