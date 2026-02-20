@@ -1,0 +1,94 @@
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- Inherit defaults from Spring Boot Parent -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.5.9</version>
+  </parent>
+
+  <!-- Application properties -->
+  <groupId>com.ibm.cicsdev.springboot</groupId>
+  <artifactId>cics-java-liberty-springboot-jcics</artifactId>
+  <version>0.1.0</version>
+  <name>cics-java-liberty-springboot-jcics</name>
+  <description>CICS Spring Boot Application - JCICS Example</description>
+
+  <properties>
+    <java.version>17</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.source>${java.version}</maven.compiler.source>    
+    <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+  </properties>
+
+  <!--Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample) -->
+  <!-- If you are running on a higher CICS TS version, you may replace this with a newer BOM) -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.ibm.cics</groupId>
+        <artifactId>com.ibm.cics.ts.bom</artifactId>
+        <version>6.1-20250812133513-PH63856</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+   
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+     <!-- Compile against, but don't include JCICS in the final build (version and scope are from BOM) -->
+    <dependency>
+	        <groupId>com.ibm.cics</groupId>
+	        <artifactId>com.ibm.cics.server</artifactId>
+    </dependency>
+
+    <!-- Compile against, but don't include Tomcat in the runtime build -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <!-- Package as an executable war (default is jar) -->
+  <packaging>war</packaging>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!-- 
+    Publishes artifacts to here if the deploy goal is used. 
+
+    The values here can be passed on the maven command line
+    using the -D flag syntax 
+  
+    for example:
+    -Dpublish_repo_snapshots_name=my-repo 
+    -->
+  <distributionManagement>
+    <snapshotRepository>
+      <id>${publish_repo_snapshots_name}</id>
+      <url>${publish_repo_snapshots_url}</url>
+    </snapshotRepository>
+    <repository>
+      <id>${publish_repo_releases_name}</id>
+      <url>${publish_repo_releases_url}</url>
+    </repository>
+  </distributionManagement>
+
+</project>
