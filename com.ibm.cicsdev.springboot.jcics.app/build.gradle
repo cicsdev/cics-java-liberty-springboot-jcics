@@ -60,14 +60,4 @@ dependencies
 bootWar { enabled = false }
 
 
-publishing 
-{ 
-    // Configure the Maven repository to publish to somewhere which is configurable
-    // with environment variables from outside gradle.
-    //
-    // For example:
-    //   gradle build publish \
-    //   -Ppublish_repo_releases_url="file://my-folder" \
-    //   -Ppublish_repo_releases_name="my-maven-repo"
-    //
- }
+
