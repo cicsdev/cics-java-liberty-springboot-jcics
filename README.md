@@ -161,5 +161,65 @@ The example application is divided into four services which perform actions on a
     - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/delete?tsq=SPGJCICS`  
 
 
++# Quickstart (Local)
++
++This sample demonstrates a Spring Boot application that integrates with CICS via JCICS
++and uses IBM MQ for messaging. The steps below help you **build, run, and test locally**
++before deploying to Liberty in CICS.
++
++## Prerequisites
++* Java 17 or 21 (LTS)
++* Maven 3.9+ (or Gradle 8+)
++* Docker / Docker Compose
++
++## Build & unit test
++```bash
++mvn -q -DskipTests=false clean verify
++```
++
++## Run a local IBM MQ (for dev/test)
++We use the public `ibmcom/mq` image to run MQ on your machine.  
++> Source/Reference: widely used in IBM MQ Java tutorials.  
++```bash
++docker compose up -d
++```
++
++This starts MQ at:
++* Channel: `DEV.APP.SVRCONN`
++* Queue manager: `QM1`
++* Listener port: `1414`
++* App queue: `DEV.QUEUE.1`
++
++## Configure Spring Boot to talk to MQ
++Add (or update) your `src/main/resources/application.yml`:
++```yaml
++ibm:
++  mq:
++    host: localhost
++    port: 1414
++    queueManager: QM1
++    channel: DEV.APP.SVRCONN
++    queue: DEV.QUEUE.1
++```
++
++## Run the app
++```bash
++mvn spring-boot:run
++```
++The app should start and connect to MQ.
++
++## Troubleshooting
++* If connection fails, confirm MQ is up:
++  ```bash
++  docker ps | grep mq
++  ```
++* Verify port `1414` is free and reachable.
++* For CICS/Liberty deployment and JCICS specifics, see IBM Developer’s Spring-for-CICS guides.
++
++## References
++* CICSdev org overview of samples: https://github.com/cicsdev
++* IBM Developer – Spring Boot on CICS (Parts 1–5): https://developer.ibm.com/components/spring/tutorials/
++* IBM MQ in Docker for Java/JMS: https://www.baeldung.com/java-message-service-ibm-mq-read-write
+
 ## License
 This project is licensed under [Eclipse Public License - v 2.0](LICENSE). 
