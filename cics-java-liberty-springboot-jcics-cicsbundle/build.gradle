@@ -1,0 +1,28 @@
+// ============================================================================
+// Plugins
+// ============================================================================
+plugins {
+    id 'com.ibm.cics.bundle' version '1.0.8'
+}
+
+// ============================================================================
+// Project Information
+// ============================================================================
+description = 'CICS JCICS Springboot Application - CICS Bundle'
+version = '0.1.0'
+
+// ============================================================================
+// Dependencies
+// ============================================================================
+dependencies {
+    // Application WAR from sibling project
+    cicsBundlePart project(path: ':cics-java-liberty-springboot-jcics-app', configuration: 'archives')
+}
+
+cicsBundle {
+    build {
+        defaultJVMServer = project.findProperty("cics.jvmserver") ?: "DFHWLP"
+    }
+}
+
+// Made with Bob
