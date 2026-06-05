@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>com.ibm.cicsdev.springboot.jcics</name>
+	<name>cics-java-liberty-springboot-jcics</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -40,3 +40,5 @@
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 	</natures>
 </projectDescription>
+
+<!-- Made with Bob -->
