@@ -27,14 +27,13 @@ jobs:
           base-copyright: 'Copyright IBM Corp. 2026'
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  build-mvnw:
-    name: Build Maven Wrapper
+  build-maven:
+    name: Build Maven
 
     runs-on: ubuntu-latest
     strategy:
       matrix:
-         jdk: [17, 21, 25]
-         
+        jdk: [17, 21, 25]
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK ${{ matrix.jdk }}
@@ -44,16 +43,33 @@ jobs:
           distribution: "semeru"
           cache: maven
       - name: Build with Maven
-        run: ./mvnw --batch-mode --update-snapshots --file pom.xml -Djava.version=${{ matrix.jdk }} package 
+        run: mvn --batch-mode --update-snapshots --file pom.xml -Djava.version=${{ matrix.jdk }} package
 
-  build-gradlew:
-    name: Build Gradle wrapper
+  build-mvnw:
+    name: Build Maven Wrapper
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk: [17, 21, 25]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK ${{ matrix.jdk }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.jdk }}
+          distribution: "semeru"
+          cache: maven
+      - name: Build with Maven Wrapper
+        run: ./mvnw --batch-mode --update-snapshots --file pom.xml -Djava.version=${{ matrix.jdk }} package
+
+  build-gradle:
+    name: Build Gradle
     
     runs-on: ubuntu-latest
     strategy:
       matrix:
-         jdk: [17, 21, 25]
-         
+        jdk: [17, 21, 25]
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK ${{ matrix.jdk }}
@@ -64,4 +80,25 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
     - name: Build with Gradle
-      run: ./gradlew build bootWar -Pjava_version=${{ matrix.jdk }}
+      run: gradle build -Pjava_version=${{ matrix.jdk }}
+
+  build-gradlew:
+    name: Build Gradle Wrapper
+    
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk: [17, 21, 25]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK ${{ matrix.jdk }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.jdk }}
+        distribution: 'semeru'
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+    - name: Build with Gradle Wrapper
+      run: ./gradlew build -Pjava_version=${{ matrix.jdk }}
+
+# Made with Bob
