@@ -75,17 +75,4 @@
     </plugins>
   </build>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>${publish_repo_snapshots_name}</id>
-      <url>${publish_repo_snapshots_url}</url>
-    </snapshotRepository>
-    <repository>
-      <id>${publish_repo_releases_name}</id>
-      <url>${publish_repo_releases_url}</url>
-    </repository>
-  </distributionManagement>
-
 </project>
-
-<!-- Made with Bob -->
