@@ -6,7 +6,6 @@ plugins
 	id 'eclipse'
 	id 'idea'
 	id 'war'
-	id 'maven-publish'
 }
 
 group = 'com.ibm.cicsdev.springboot'
