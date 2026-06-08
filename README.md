@@ -1,19 +1,37 @@
 # cics-java-liberty-springboot-jcics
 [![Build](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/java.yml/badge.svg)](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/java.yml)
 
-This sample provides a Spring Boot application that uses the JCICS TSQ Java API to provide a RESTful CICS temporary storage queue (TSQ) browsing service. The sample also provides a set of Maven and Gradle build files for use either in Eclipse or standalone build environments.
+## Overview
+
+This sample provides a Spring Boot application that uses the JCICS TSQ Java API to provide a RESTful CICS temporary storage queue (TSQ) browsing service. The sample demonstrates how to integrate Spring Boot with IBM CICS using the JCICS API on a CICS Liberty JVM server.
+
+The sample is structured as a multi-module project with:
+- **cics-java-liberty-springboot-jcics-app** - The Spring Boot application module
+- **cics-java-liberty-springboot-jcics-cicsbundle** - The CICS bundle module for deployment
 
 For further details about the development of this sample refer to the tutorial [Spring Boot Java applications for CICS, Part 1: JCICS, Gradle, and Maven](https://developer.ibm.com/tutorials/spring-boot-java-applications-for-cics-part-1-jcics-maven-gradle/)
 
+---
 
 ## Requirements
 
-- CICS TS V6.1 or later
-- A configured Liberty JVM server in CICS
-- Jakarta EE 10 or later
-- IBM Semeru Runtime Certified Edition Version 17.0 or later on the workstation
-- An Eclipse development environment on the workstation (optional)
-- Either Gradle or Apache Maven on the workstation (optional if using Wrappers)
+### Workstation Requirements
+- **Java:** Java SE 17 or later (required for Spring Boot 3.x)
+- **Build Tools:**
+  - **Gradle:** Version 7.3+ (Java 17 support) - Recommended: 8.0+ - included via wrapper
+  - **Maven:** Version 3.8.1+ (Java 17 support) - Recommended: 3.9.0+ - included via wrapper
+- **IDE (Optional):**
+  - Eclipse with IBM CICS SDK for Java EE, Jakarta EE and Liberty
+  - IntelliJ IDEA, VS Code, or any IDE with Gradle/Maven support
+  - Command line (no IDE required if using wrappers)
+
+### z/OS Requirements
+- **CICS TS:** V6.1 or later
+- **WebSphere Liberty:** Included with CICS
+- **Java:** IBM Semeru Runtime 17 or later on z/OS
+- **Jakarta EE:** 10 or later
+
+---
 
 
 
@@ -51,114 +69,205 @@ Maven (POM.xml):
   ```
 
   
-## Building 
+## Building the Sample
 
-You can build the sample using an IDE of your choice, or you can build it from the command line. For both approaches, using the supplied Gradle or Maven wrapper is the recommended way to get a consistent version of build tooling. 
+You can build using Gradle, Maven, or Eclipse. The wrappers are pre-configured with compatible versions.
 
-On the command line, you simply swap the Gradle or Maven command for the wrapper equivalent, `gradlew` or `mvnw` respectively.
-  
-For an IDE, taking Eclipse as an example, the plug-ins for Gradle *buildship* and Maven *m2e* will integrate with the "Run As..." capability, allowing you to specify whether you want to build the project with a Wrapper, or a specific version of your chosen build tool.
+### Option 1: Building with Gradle
 
-The required build-tasks are typically `clean build` for Gradle and `clean package` for Maven. Once run, Gradle will generate a WAR file in the `build/libs` directory, while Maven will generate it in the `target` directory.
+**From the root directory:**
 
-**Note:** When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
-
-**Note:** If you import the project to your IDE, you might experience local project compile errors. To resolve these errors you should run a tooling refresh on that project. For example, in Eclipse: right-click on "Project", select "Gradle -> Refresh Gradle Project", **or** right-click on "Project", select "Maven -> Update Project...".
-
->Tip: *In Eclipse, Gradle (buildship) is able to fully refresh and resolve the local classpath even if the project was previously updated by Maven. However, Maven (m2e) does not currently reciprocate that capability. If you previously refreshed the project with Gradle, you'll need to manually remove the 'Project Dependencies' entry on the Java build-path of your Project Properties to avoid duplication errors when performing a Maven Project Update.*  
-
-#### Gradle Wrapper (command line)
-
-Run the following in a local command prompt:
-
-On Linux or Mac:
-
-```shell
+Linux/Mac:
+```bash
 ./gradlew clean build
 ```
-On Windows:
 
-```shell
+Windows:
+```cmd
 gradlew.bat clean build
 ```
 
-This creates a WAR file inside the `build/libs` directory.
+**Output:**
+- WAR file: `cics-java-liberty-springboot-jcics-app/build/libs/cics-java-liberty-springboot-jcics-app-0.1.0.war`
+- CICS bundle ZIP: `cics-java-liberty-springboot-jcics-cicsbundle/build/distributions/cics-java-liberty-springboot-jcics-cicsbundle-0.1.0.zip`
 
-#### Maven Wrapper (command line)
+**Note:**
+- In Eclipse, the `build` directory may be hidden. To view it: Package Explorer → ⋮ menu → Filters → Uncheck "Gradle build folder"
 
+---
 
-Run the following in a local command prompt:
+### Option 2: Building with Maven
 
-On Linux or Mac:
+**From the root directory:**
 
-```shell
+Linux/Mac:
+```bash
 ./mvnw clean package
 ```
 
-On Windows:
-
-```shell
+Windows:
+```cmd
 mvnw.cmd clean package
 ```
 
-This creates a WAR file inside the `target` directory.
+**Output:**
+- WAR file: `cics-java-liberty-springboot-jcics-app/target/cics-java-liberty-springboot-jcics-app-0.1.0.war`
+- CICS bundle ZIP: `cics-java-liberty-springboot-jcics-cicsbundle/target/cics-java-liberty-springboot-jcics-cicsbundle-0.1.0.zip`
+
+---
+
+### Option 3: Building with Eclipse
+
+1. **Clone and Import Repository:**
+   - File → Import → Git → Projects from Git → Clone URI
+   - Enter the repository URL
+   - Ensure "Import existing Eclipse projects" box is checked
+   - Complete the wizard to clone and import the projects
+
+2. **Resolve Build Path (if needed):**
+   - Right-click project → Properties → Java Build Path → Libraries
+   - Add Library → CICS with Enterprise Java and Liberty
+   - Select appropriate CICS and Java EE versions
+
+3. **Build the Project:**
+   - Right-click on root project → Run As → Gradle Build (or Maven Build)
+   - Goals: `clean build` (Gradle) or `clean package` (Maven)
+
+**Notes:**
+- When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
+- If you import the project to your IDE, you might experience local project compile errors. To resolve these errors you should run a tooling refresh on that project. For example, in Eclipse: right-click on "Project", select "Gradle -> Refresh Gradle Project", **or** right-click on "Project", select "Maven -> Update Project...".
+
+>Tip: *In Eclipse, Gradle (buildship) is able to fully refresh and resolve the local classpath even if the project was previously updated by Maven. However, Maven (m2e) does not currently reciprocate that capability. If you previously refreshed the project with Gradle, you'll need to manually remove the 'Project Dependencies' entry on the Java build-path of your Project Properties to avoid duplication errors when performing a Maven Project Update.*
+
+---
 
 
 
-## Deploying to a CICS Liberty JVM server
+## Deploying to CICS
 
-- Ensure you have the following features defined in your Liberty `server.xml`:           
-    - `<servlet-6.0>` or later depending on the version of Jakarta EE in use.  
-    - `<cicsts:security-1.0>` if CICS security is enabled.    	 
-    
-- Deployment option 1:
-    - Copy and paste the built WAR from your *target* or *build/libs* directory into a Eclipse CICS bundle project and create a new WAR bundlepart that references the WAR file. Then deploy the CICS bundle project from CICS Explorer using the **Export Bundle Project to z/OS UNIX File System** wizard.
-    
-   
-- Deployment option 2:
-    - Manually upload the WAR file to zFS and add an `<application>` element to the Liberty server.xml to define the web application with access to all authenticated users. For example the following application element can be used to install a WAR, and grant access to all authenticated users if security is enabled.
- 
-``` XML
-<application id="cics-java-liberty-springboot-jcics-0.1.0"  
-    location="${server.config.dir}/springapps/cics-java-liberty-springboot-jcics-0.1.0.war"  
-    name="cics-java-liberty-springboot-jcics-0.1.0" type="war">
+### Prerequisites
+
+Ensure you have the following features defined in your Liberty `server.xml`:
+- `<feature>servlet-6.0</feature>` or later depending on the version of Jakarta EE in use
+- `<feature>cicsts:security-1.0</feature>` if CICS security is enabled
+
+---
+
+### Method 1: CICS Bundle Deployment (Gradle/Maven)
+
+This is the **recommended** deployment method as it uses the CICS bundle generated during the build process.
+
+**Before deploying, configure your JVM server name:**
+
+Edit the CICS bundle configuration files to specify your Liberty JVM server:
+
+**Gradle** (`cics-java-liberty-springboot-jcics-cicsbundle/build.gradle`):
+```gradle
+cics.jvmserver = 'YOUR_JVMSERVER_NAME'  // e.g., 'DFHWLP'
+```
+
+**Maven** (`cics-java-liberty-springboot-jcics-cicsbundle/pom.xml`):
+```xml
+<cics.jvmserver>YOUR_JVMSERVER_NAME</cics.jvmserver>  <!-- e.g., DFHWLP -->
+```
+
+**Deploy the bundle:**
+
+1. Upload the CICS bundle ZIP file to zFS:
+   - Gradle: `cics-java-liberty-springboot-jcics-cicsbundle/build/distributions/cics-java-liberty-springboot-jcics-cicsbundle-0.1.0.zip`
+   - Maven: `cics-java-liberty-springboot-jcics-cicsbundle/target/cics-java-liberty-springboot-jcics-cicsbundle-0.1.0.zip`
+
+2. Unzip the bundle on zFS
+
+3. Create a CICS BUNDLE resource definition:
+   ```
+   CEDA DEFINE BUNDLE(JCICS) GROUP(MYGROUP) BUNDLEDIR(/path/to/bundle)
+   ```
+
+4. Install the bundle:
+   ```
+   CEDA INSTALL BUNDLE(JCICS) GROUP(MYGROUP)
+   ```
+
+---
+
+### Method 2: CICS Explorer Deployment
+
+1. Copy the built WAR from your *target* or *build/libs* directory into an Eclipse CICS bundle project
+2. Create a new WAR bundlepart that references the WAR file
+3. Deploy the CICS bundle project from CICS Explorer using the **Export Bundle Project to z/OS UNIX File System** wizard
+
+---
+
+### Method 3: Direct Liberty Application Deployment
+
+Manually upload the WAR file to zFS and add an `<application>` element to the Liberty server.xml:
+
+```xml
+<application id="cics-java-liberty-springboot-jcics-app-0.1.0"
+    location="${server.config.dir}/springapps/cics-java-liberty-springboot-jcics-app-0.1.0.war"
+    name="cics-java-liberty-springboot-jcics-app-0.1.0" type="war">
     <application-bnd>
         <security-role name="cicsAllAuthenticated">
-        <special-subject type="ALL_AUTHENTICATED_USERS"/>
-    </security-role>
-   </application-bnd>  
+            <special-subject type="ALL_AUTHENTICATED_USERS"/>
+        </security-role>
+    </application-bnd>
 </application>
 ```
 
+---
 
-## Trying out the sample
 
-The example application is divided into four services which perform actions on a CICS temporary storage queuue (TSQ). Each with their own REST service suffix as follows:
+## Running the Sample
 
-- *info* - query information about the TSQ
-- *write* - write information to a TSQ 
-- *browse* - read items from the TSQ
-- *delete* - delete the TSQ
+The example application is divided into four services which perform actions on a CICS temporary storage queue (TSQ). Each with their own REST service suffix as follows:
 
- 
- 
-1. Ensure the web application started successfully in Liberty by checking for msg `CWWKT0016I` in the Liberty messages.log:
-    - `A CWWKT0016I: Web application available (default_host): http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0`
-    - `I SRVE0292I: Servlet Message - [com.ibm.cicsdev.springboot.jcics-0.1.0]:.Initializing Spring embedded WebApplicationContext`
-  
-2. Copy the context root from message CWWKT0016I along with the REST service suffix into you web browser. For example to write the string `ILOVECICS` to a TSQ called SPGJCICS:
-    - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/write?tsq=SPGJCICS&item=ILOVECICS` 
-  
-3. Check if the specified TSQ has the information you expected by either: 
-    - Executing the CICS command `CEBR SPGJCICS` on a 3270 terminal. For this example, you should see `ILOVECICS` in TSQ SPGJCICS, or
-    - Using the browse TSQ service URL for example to check the content of TSQ SPGJCICS
-        - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/browse?tsq=SPGJCICS` 
-  
-4. If you use the TSQ info service you will see the basic information for TSQ SPGJCICS
-    - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/info?tsq=SPGJCICS`   
+- **info** - query information about the TSQ
+- **write** - write information to a TSQ
+- **browse** - read items from the TSQ
+- **delete** - delete the TSQ
 
-5. If you want to delete this TSQ, you can use the delete service for example
-    - `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-0.1.0/delete?tsq=SPGJCICS`  
+### Testing the Application
+
+1. **Verify Deployment:**
+   
+   Ensure the web application started successfully in Liberty by checking for msg `CWWKT0016I` in the Liberty messages.log:
+   ```
+   CWWKT0016I: Web application available (default_host): http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-app-0.1.0
+   SRVE0292I: Servlet Message - [cics-java-liberty-springboot-jcics-app-0.1.0]:.Initializing Spring embedded WebApplicationContext
+   ```
+
+2. **Write to a TSQ:**
+   
+   To write the string `ILOVECICS` to a TSQ called `SPGJCICS`:
+   ```
+   http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-app-0.1.0/write?tsq=SPGJCICS&item=ILOVECICS
+   ```
+
+3. **Verify the TSQ Content:**
+   
+   Check if the specified TSQ has the information you expected by either:
+   - Executing the CICS command `CEBR SPGJCICS` on a 3270 terminal. You should see `ILOVECICS` in TSQ SPGJCICS, or
+   - Using the browse TSQ service URL:
+     ```
+     http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-app-0.1.0/browse?tsq=SPGJCICS
+     ```
+
+4. **Query TSQ Information:**
+   
+   To see basic information for TSQ SPGJCICS:
+   ```
+   http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-app-0.1.0/info?tsq=SPGJCICS
+   ```
+
+5. **Delete the TSQ:**
+   
+   To delete the TSQ:
+   ```
+   http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-app-0.1.0/delete?tsq=SPGJCICS
+   ```
+
+---
 
 
 ## License

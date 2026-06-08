@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ================================================================ -->
+    <!-- Parent Project                                                   -->
+    <!-- ================================================================ -->
+    <parent>
+        <groupId>com.ibm.cicsdev.springboot</groupId>
+  		<artifactId>cics-java-liberty-springboot-jcics</artifactId>
+        <version>0.1.0</version>
+    </parent>
+
+    <!-- ================================================================ -->
+    <!-- Project Coordinates                                              -->
+    <!-- ================================================================ -->
+    <artifactId>cics-java-liberty-springboot-jcics-app</artifactId>
+    <packaging>war</packaging>
+    <name>CICS JCICS Springboot - Application</name>
+
+    <properties>
+        <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+    </properties>
+
+    <!--Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample) -->
+    <!-- If you are running on a higher CICS TS version, you may replace this with a newer BOM) -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.ibm.cics</groupId>
+                <artifactId>com.ibm.cics.ts.bom</artifactId>
+                <version>6.1-20250812133513-PH63856</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- ================================================================ -->
+	<!-- Dependencies                                                     -->
+	<!-- ================================================================ -->  
+	<dependencies>
+   
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<!-- Compile against, but don't include JCICS in the final build (version and scope are from BOM) -->
+		<dependency>
+			<groupId>com.ibm.cics</groupId>
+			<artifactId>com.ibm.cics.server</artifactId>
+		</dependency>
+
+		<!-- Compile against, but don't include Tomcat in the runtime build -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+    <!-- ================================================================ -->
+    <!-- Build Configuration                                              -->
+    <!-- ================================================================ -->
+    <build>
+	<finalName>cics-java-liberty-springboot-jcics</finalName>
+    <plugins>
+       <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+       </plugin>
+    </plugins>
+  </build>
+
+</project>
