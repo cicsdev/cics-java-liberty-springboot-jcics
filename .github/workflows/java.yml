@@ -24,7 +24,7 @@ jobs:
         with:
           directory: './cics-java-liberty-springboot-jcics-app/'
           file-extensions: '*.java'
-          base-copyright: 'Copyright IBM Corp. 2025'
+          base-copyright: 'Copyright IBM Corp. 2026'
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build-maven:
