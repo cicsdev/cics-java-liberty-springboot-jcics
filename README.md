@@ -1,5 +1,5 @@
 # cics-java-liberty-springboot-jcics
-[![Build](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/java.yml/badge.svg)](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/java.yml)
+[![Build](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml/badge.svg)](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml)
 
 ## Overview
 
