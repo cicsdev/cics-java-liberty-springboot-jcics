@@ -98,8 +98,6 @@ jobs:
       with:
         java-version: ${{ matrix.jdk }}
         distribution: 'semeru'
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v4
     - name: Build with Gradle Wrapper
       run: ./gradlew build -Pjava_version=${{ matrix.jdk }}
 
