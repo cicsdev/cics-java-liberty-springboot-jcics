@@ -1,9 +1,31 @@
 # cics-java-liberty-springboot-jcics
 [![Build](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml/badge.svg)](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml)
+[![License](https://img.shields.io/badge/License-EPL%202.0-red.svg)](https://www.eclipse.org/legal/epl-2.0/)
 
 ## Overview
 
 This sample provides a Spring Boot application that uses the JCICS TSQ Java API to provide a RESTful CICS temporary storage queue (TSQ) browsing service. The sample demonstrates how to integrate Spring Boot with IBM CICS using the JCICS API on a CICS Liberty JVM server.
+
+## Key Features
+
+- **JCICS API Integration**: Direct use of CICS Java APIs for TSQ operations
+- **RESTful Services**: Spring Boot REST endpoints for TSQ management
+- **Multi-Module Project**: Separate application and CICS bundle modules
+- **Multi-Build Support**: Compatible with both Gradle and Maven
+- **CICS Bundle Deployment**: Automated deployment using CICS bundle plugins
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Requirements](#requirements)
+- [Downloading](#downloading)
+- [Building the Sample](#building-the-sample)
+- [Deploying to a CICS Liberty JVM server](#deploying-to-a-cics-liberty-jvm-server)
+- [Running the Sample](#running-the-sample)
+- [License](#license)
+- [Additional Resources](#additional-resources)
+- [Contributing](#contributing)
 
 The sample is structured as a multi-module project with:
 - **cics-java-liberty-springboot-jcics-app** - The Spring Boot application module
@@ -102,12 +124,12 @@ gradlew.bat clean build
 
 Linux/Mac:
 ```bash
-./mvnw clean package
+./mvnw clean verify
 ```
 
 Windows:
 ```cmd
-mvnw.cmd clean package
+mvnw.cmd clean verify
 ```
 
 **Output:**
@@ -131,7 +153,7 @@ mvnw.cmd clean package
 
 3. **Build the Project:**
    - Right-click on root project → Run As → Gradle Build (or Maven Build)
-   - Goals: `clean build` (Gradle) or `clean package` (Maven)
+   - Goals: `clean build` (Gradle) or `clean verify` (Maven)
 
 **Notes:**
 - When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
@@ -143,7 +165,7 @@ mvnw.cmd clean package
 
 
 
-## Deploying to CICS
+## Deploying to a CICS Liberty JVM server
 
 ### Prerequisites
 
@@ -153,7 +175,7 @@ Ensure you have the following features defined in your Liberty `server.xml`:
 
 ---
 
-### Method 1: CICS Bundle Deployment (Gradle/Maven)
+### Method 1: CICS Bundle Plugin Deployment (Gradle/Maven)
 
 This is the **recommended** deployment method as it uses the CICS bundle generated during the build process.
 
@@ -191,11 +213,11 @@ cics.jvmserver = 'YOUR_JVMSERVER_NAME'  // e.g., 'DFHWLP'
 
 ---
 
-### Method 2: CICS Explorer Deployment
+### Method 2: CICS Explorer SDK Deployment
 
-1. Copy the built WAR from your *target* or *build/libs* directory into an Eclipse CICS bundle project
+1. Copy the built WAR from your *target* or *build/libs* directory into an Eclipse CICS Bundle Project
 2. Create a new WAR bundlepart that references the WAR file
-3. Deploy the CICS bundle project from CICS Explorer using the **Export Bundle Project to z/OS UNIX File System** wizard
+3. Deploy the CICS Bundle Project from CICS Explorer using the **Export Bundle Project to z/OS UNIX File System** wizard
 
 ---
 
@@ -271,4 +293,15 @@ The example application is divided into four services which perform actions on a
 
 
 ## License
-This project is licensed under [Eclipse Public License - v 2.0](LICENSE). 
+This project is licensed under [Eclipse Public License - v 2.0](LICENSE).
+
+## Additional Resources
+
+- [CICS TS for z/OS Documentation](https://www.ibm.com/docs/en/cics-ts)
+- [Spring Boot Java applications for CICS, Part 1: JCICS, Gradle, and Maven](https://developer.ibm.com/tutorials/spring-boot-java-applications-for-cics-part-1-jcics-maven-gradle/)
+- [CICS Java Development](https://www.ibm.com/docs/en/cics-ts/latest?topic=programming-java-applications)
+- [Spring Boot Documentation](https://spring.io/projects/spring-boot)
+
+## Contributing
+
+Contributions are welcome! Please read our [contributing guidelines](https://github.com/cicsdev/.github/blob/main/CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
