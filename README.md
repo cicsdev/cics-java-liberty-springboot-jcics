@@ -18,7 +18,7 @@ This sample provides a Spring Boot application that uses the JCICS TSQ Java API 
 
 - [Overview](#overview)
 - [Key Features](#key-features)
-- [Requirements](#requirements)
+- [Prerequisites](#prerequisites)
 - [Downloading](#downloading)
 - [Building the Sample](#building-the-sample)
 - [Deploying to a CICS Liberty JVM server](#deploying-to-a-cics-liberty-jvm-server)
@@ -35,7 +35,7 @@ For further details about the development of this sample refer to the tutorial [
 
 ---
 
-## Requirements
+## Prerequisites
 
 ### Workstation Requirements
 - **Java:** Java SE 17 or later (required for Spring Boot 3.x)
@@ -252,15 +252,15 @@ The example application is divided into four services which perform actions on a
    
    Ensure the web application started successfully in Liberty by checking for msg `CWWKT0016I` in the Liberty messages.log:
    ```
-   CWWKT0016I: Web application available (default_host): http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-app-0.1.0
-   SRVE0292I: Servlet Message - [cics-java-liberty-springboot-jcics-app-0.1.0]:.Initializing Spring embedded WebApplicationContext
+   CWWKT0016I: Web application available (default_host): http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics
+   SRVE0292I: Servlet Message - [cics-java-liberty-springboot-jcics]:.Initializing Spring embedded WebApplicationContext
    ```
 
 2. **Write to a TSQ:**
    
    To write the string `ILOVECICS` to a TSQ called `SPGJCICS`:
    ```
-   http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-app-0.1.0/write?tsq=SPGJCICS&item=ILOVECICS
+   http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics/write?tsq=SPGJCICS&item=ILOVECICS
    ```
 
 3. **Verify the TSQ Content:**
@@ -269,21 +269,21 @@ The example application is divided into four services which perform actions on a
    - Executing the CICS command `CEBR SPGJCICS` on a 3270 terminal. You should see `ILOVECICS` in TSQ SPGJCICS, or
    - Using the browse TSQ service URL:
      ```
-     http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-app-0.1.0/browse?tsq=SPGJCICS
+     http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics/browse?tsq=SPGJCICS
      ```
 
 4. **Query TSQ Information:**
    
    To see basic information for TSQ SPGJCICS:
    ```
-   http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-app-0.1.0/info?tsq=SPGJCICS
+   http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics/info?tsq=SPGJCICS
    ```
 
 5. **Delete the TSQ:**
    
    To delete the TSQ:
    ```
-   http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics-app-0.1.0/delete?tsq=SPGJCICS
+   http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-jcics/delete?tsq=SPGJCICS
    ```
 
 ---
