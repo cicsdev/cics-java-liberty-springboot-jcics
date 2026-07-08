@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="Liberty server for CICS Spring Boot JCICS sample">
+
+    <featureManager>
+        <!-- Required for Spring Boot 3.x and Jakarta EE 10 -->
+        <feature>servlet-6.0</feature>
+        <!-- Enable CICS security if required -->
+        <feature>cicsts:security-1.0</feature>
+    </featureManager>
+
+</server>
