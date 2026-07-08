@@ -6,8 +6,7 @@
 
 This sample provides a Spring Boot application that uses the JCICS TSQ Java API to provide a RESTful CICS temporary storage queue (TSQ) browsing service. The sample demonstrates how to integrate Spring Boot with IBM CICS using the JCICS API on a CICS Liberty JVM server.
 
-## Key Features
-
+**Key Features:**
 - **JCICS API Integration**: Direct use of CICS Java APIs for TSQ operations
 - **RESTful Services**: Spring Boot REST endpoints for TSQ management
 - **Multi-Module Project**: Separate application and CICS bundle modules
@@ -16,24 +15,17 @@ This sample provides a Spring Boot application that uses the JCICS TSQ Java API 
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Prerequisites](#prerequisites)
-- [Downloading](#downloading)
-- [Building the Sample](#building-the-sample)
-- [Deploying to a CICS Liberty JVM server](#deploying-to-a-cics-liberty-jvm-server)
-- [Running the Sample](#running-the-sample)
-- [License](#license)
-- [Additional Resources](#additional-resources)
-- [Contributing](#contributing)
-
-The sample is structured as a multi-module project with:
-- **cics-java-liberty-springboot-jcics-app** - The Spring Boot application module
-- **cics-java-liberty-springboot-jcics-cicsbundle** - The CICS bundle module for deployment
-
-For further details about the development of this sample refer to the tutorial [Spring Boot Java applications for CICS, Part 1: JCICS, Gradle, and Maven](https://developer.ibm.com/tutorials/spring-boot-java-applications-for-cics-part-1-jcics-maven-gradle/)
-
----
+1. [Overview](#overview)
+2. [Prerequisites](#prerequisites)
+3. [Reference](#reference)
+4. [Downloading](#downloading)
+5. [Check Dependencies](#check-dependencies)
+6. [Building the Sample](#building-the-sample)
+7. [Deploying to a CICS Liberty JVM server](#deploying-to-a-cics-liberty-jvm-server)
+8. [Running the Sample](#running-the-sample)
+9. [License](#license)
+10. [Additional Resources](#additional-resources)
+11. [Contributing](#contributing)
 
 ## Prerequisites
 
@@ -53,9 +45,9 @@ For further details about the development of this sample refer to the tutorial [
 - **Java:** IBM Semeru Runtime 17 or later on z/OS
 - **Jakarta EE:** 10 or later
 
----
+## Reference
 
-
+For more information about the development of this sample, see [Spring Boot Java applications for CICS, Part 1: JCICS, Gradle, and Maven](https://developer.ibm.com/tutorials/spring-boot-java-applications-for-cics-part-1-jcics-maven-gradle/).
 
 ## Downloading
 
