@@ -144,15 +144,14 @@ This creates a WAR file inside the `cics-java-liberty-springboot-jcics-app/targe
 
 ## Deploying to a CICS Liberty JVM server
 
-### Prerequisites
-
 Ensure you have the following features defined in your Liberty `server.xml`:
-- `<feature>servlet-6.0</feature>` or later depending on the version of Jakarta EE in use
-- `<feature>cicsts:security-1.0</feature>` if CICS security is enabled
 
----
+- `servlet-6.0` (required for Spring Boot 3.x and Jakarta EE 10)
+- `cicsts:security-1.0` if CICS security is enabled
 
-### Method 1: CICS Bundle Plugin Deployment (Gradle/Maven)
+A template `server.xml` is provided [here](./etc/config/liberty/server.xml).
+
+### CICS Bundle Plugin Deployment (Gradle/Maven)
 
 This is the **recommended** deployment method as it uses the CICS bundle generated during the build process.
 
@@ -190,22 +189,26 @@ cics.jvmserver = 'YOUR_JVMSERVER_NAME'  // e.g., 'DFHWLP'
 
 ---
 
-### Method 2: CICS Explorer SDK Deployment
+### CICS Explorer SDK Deployment
 
-1. Copy the built WAR from your *target* or *build/libs* directory into an Eclipse CICS Bundle Project
-2. Create a new WAR bundlepart that references the WAR file
-3. Deploy the CICS Bundle Project from CICS Explorer using the **Export Bundle Project to z/OS UNIX File System** wizard
+This repository includes a pre-configured Eclipse CICS bundle project `cics-java-liberty-springboot-jcics-cicsbundle-eclipse` that can be used directly with CICS Explorer SDK.
+
+1. In the Eclipse **Project Explorer**, right-click the `cics-java-liberty-springboot-jcics-cicsbundle-eclipse` folder → **Import as Project**
+2. Right-click the imported project → **Export Bundle Project to z/OS UNIX File System** and follow the wizard
+
+> **Note**: The bundle project is pre-configured so that the Eclipse WTP export automatically packages the application WAR with all dependencies. This relies on the `-app` project being open in the same Eclipse workspace.
 
 ---
 
-### Method 3: Direct Liberty Application Deployment
+### Direct Liberty Application Deployment
 
-Manually upload the WAR file to zFS and add an `<application>` element to the Liberty server.xml:
+1. Manually upload the WAR file to zFS
+2. Add an `<application>` element to the Liberty server.xml to define the web application with access to all authenticated users. For example:
 
 ```xml
-<application id="cics-java-liberty-springboot-jcics-app-0.1.0"
-    location="${server.config.dir}/springapps/cics-java-liberty-springboot-jcics-app-0.1.0.war"
-    name="cics-java-liberty-springboot-jcics-app-0.1.0" type="war">
+<application id="cics-java-liberty-springboot-jcics"
+    location="${server.config.dir}/springapps/cics-java-liberty-springboot-jcics.war"
+    name="cics-java-liberty-springboot-jcics" type="war">
     <application-bnd>
         <security-role name="cicsAllAuthenticated">
             <special-subject type="ALL_AUTHENTICATED_USERS"/>
