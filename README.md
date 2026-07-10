@@ -23,27 +23,18 @@ This sample provides a Spring Boot application that uses the JCICS TSQ Java API 
 6. [Building the Sample](#building-the-sample)
 7. [Deploying to a CICS Liberty JVM server](#deploying-to-a-cics-liberty-jvm-server)
 8. [Running the Sample](#running-the-sample)
-9. [License](#license)
-10. [Additional Resources](#additional-resources)
-11. [Contributing](#contributing)
+9. [Troubleshooting](#troubleshooting)
+10. [License](#license)
+11. [Additional Resources](#additional-resources)
+12. [Contributing](#contributing)
 
 ## Prerequisites
 
-### Workstation Requirements
-- **Java:** Java SE 17 or later (required for Spring Boot 3.x)
-- **Build Tools:**
-  - **Gradle:** Version 7.3+ (Java 17 support) - Recommended: 8.0+ - included via wrapper
-  - **Maven:** Version 3.8.1+ (Java 17 support) - Recommended: 3.9.0+ - included via wrapper
-- **IDE (Optional):**
-  - Eclipse with IBM CICS SDK for Java EE, Jakarta EE and Liberty
-  - IntelliJ IDEA, VS Code, or any IDE with Gradle/Maven support
-  - Command line (no IDE required if using wrappers)
-
-### z/OS Requirements
-- **CICS TS:** V6.1 or later
-- **WebSphere Liberty:** Included with CICS
-- **Java:** IBM Semeru Runtime 17 or later on z/OS
-- **Jakarta EE:** 10 or later
+- CICS TS V6.1 or later (required for Spring Boot 3.x and Jakarta EE 10 support)
+- A configured Liberty JVM server in CICS
+- Java SE 17 or later on the workstation
+- An Eclipse development environment on the workstation (optional)
+- Either Gradle or Apache Maven on the workstation (optional if using Wrappers)
 
 ## Reference
 
@@ -54,7 +45,13 @@ For more information about the development of this sample, see [Spring Boot Java
 - Clone the repository using your IDEs support, such as the Eclipse Git plugin
 - **or**, download the sample as a [ZIP](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/archive/main.zip) and unzip onto the workstation
 
->*Tip: Eclipse Git provides an 'Import existing Projects' check-box when cloning a repository. This imports the root project; run a Gradle or Maven refresh afterwards to discover the `-app` and `-cicsbundle` modules. The `-cicsbundle-eclipse` project must be imported separately — see [CICS Explorer SDK Deployment](#cics-explorer-sdk-deployment).*
+**Importing into Eclipse:**
+1. In the **Git Repositories** view, right-click the repository → **Import as Project** (imports the root project)
+2. Switch to the **Java EE** perspective
+3. In the **Project Explorer**, right-click the `cics-java-liberty-springboot-jcics-app` folder → **Import as Project**
+4. Right-click the `cics-java-liberty-springboot-jcics-cicsbundle` folder → **Import as Project**
+5. Right-click the `cics-java-liberty-springboot-jcics-cicsbundle-eclipse` folder → **Import as Project**
+6. Right-click the root project → **Gradle → Refresh Gradle Project** or **Maven → Update Project...** to resolve dependencies
 
 
 ### Check dependencies
@@ -95,9 +92,7 @@ The required build-tasks are `clean build` for Gradle and `clean verify` for Mav
 
 **Note:** When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
 
-**Note:** If you import the project to your IDE, you might experience local project compile errors. To resolve these errors you should run a tooling refresh on that project. For example, in Eclipse: right-click on "Project", select "Gradle -> Refresh Gradle Project", **or** right-click on "Project", select "Maven -> Update Project...".
-
->Tip: *In Eclipse, Gradle (buildship) is able to fully refresh and resolve the local classpath even if the project was previously updated by Maven. However, Maven (m2e) does not currently reciprocate that capability. If you previously refreshed the project with Gradle, you'll need to manually remove the 'Project Dependencies' entry on the Java build-path of your Project Properties to avoid duplication errors when performing a Maven Project Update.*
+**Note:** If you import the project to your IDE, you might experience local project compile errors. To resolve these errors you should run a tooling refresh on that project. For example, in Eclipse: right-click on "Project", select "Gradle → Refresh Gradle Project", **or** right-click on "Project", select "Maven → Update Project...".
 
 ### Gradle Wrapper (command line)
 
@@ -117,7 +112,7 @@ gradlew.bat clean build
 
 This creates a WAR file inside the `cics-java-liberty-springboot-jcics-app/build/libs` directory.
 
-**Note:** In Eclipse, the `build` directory may be hidden. To view it: Package Explorer → ⋮ menu → Filters → Uncheck "Gradle build folder"
+> **Note:** In Eclipse, the `build` directory may be hidden by default. To view it: **Package Explorer → ⋮ → Filters and Customization → uncheck "Gradle build folder"**. For Maven, the `target` directory is visible by default.
 
 ### Maven Wrapper (command line)
 
@@ -136,11 +131,6 @@ mvnw.cmd clean verify
 ```
 
 This creates a WAR file inside the `cics-java-liberty-springboot-jcics-app/target` directory.
-
-> **Note:** The `-cicsbundle-eclipse` project is a standalone Eclipse project not managed by Gradle or Maven. Import it separately by right-clicking the `cics-java-liberty-springboot-jcics-cicsbundle-eclipse` folder in the **Project Explorer** → **Import as Project**.
-
-
-
 
 ## Deploying to a CICS Liberty JVM server
 
@@ -193,10 +183,9 @@ cics.jvmserver = 'YOUR_JVMSERVER_NAME'  // e.g., 'DFHWLP'
 
 This repository includes a pre-configured Eclipse CICS bundle project `cics-java-liberty-springboot-jcics-cicsbundle-eclipse` that can be used directly with CICS Explorer SDK.
 
-1. In the Eclipse **Project Explorer**, right-click the `cics-java-liberty-springboot-jcics-cicsbundle-eclipse` folder → **Import as Project**
-2. Right-click the imported project → **Export Bundle Project to z/OS UNIX File System** and follow the wizard
+1. Right-click the `cics-java-liberty-springboot-jcics-cicsbundle-eclipse` project → **Export Bundle Project to z/OS UNIX File System** and follow the wizard
 
-> **Note**: The bundle project is pre-configured so that the Eclipse WTP export automatically packages the application WAR with all dependencies. This relies on the `-app` project being open in the same Eclipse workspace.
+> **Note**: The bundle project is pre-configured so that the Eclipse WTP export automatically packages the application WAR with all dependencies. This relies on the `-app` project being open in the same Eclipse workspace. If you have not yet imported the project, follow step 5 of the [Importing into Eclipse](#downloading) instructions first.
 
 ---
 
@@ -271,6 +260,17 @@ The example application is divided into four services which perform actions on a
 
 ---
 
+## Troubleshooting
+
+**Issue: Application fails to start**
+- Check Liberty messages.log for errors
+- Verify `servlet-6.0` is enabled in `server.xml`
+- Confirm CICS TS version supports Spring Boot 3.x (V6.1+)
+
+**Issue: Red error markers in Eclipse after Maven Update Project**
+- This is a known false-positive from WTP's deployment assembly validator
+- The project includes `org.eclipse.wst.validation.prefs` to suppress these markers
+- Command-line builds (`./mvnw clean verify`) are not affected
 
 ## License
 This project is licensed under [Eclipse Public License - v 2.0](LICENSE).
@@ -284,4 +284,4 @@ This project is licensed under [Eclipse Public License - v 2.0](LICENSE).
 
 ## Contributing
 
-Contributions are welcome! Please read our [contributing guidelines](https://github.com/cicsdev/.github/blob/main/CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+This sample is maintained by IBM CICS development. We welcome bug reports and feature requests via GitHub Issues. Contributions are welcome and reviewed on a case-by-case basis — please read the [contributing guidelines](https://github.com/cicsdev/.github/blob/main/CONTRIBUTING.md) before opening a pull request. For CICS product questions, contact IBM Support.
