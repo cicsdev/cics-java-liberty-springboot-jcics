@@ -42,16 +42,22 @@ For more information about the development of this sample, see [Spring Boot Java
 
 ## Downloading
 
-- Clone the repository using your IDEs support, such as the Eclipse Git plugin
-- **or**, download the sample as a [ZIP](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/archive/main.zip) and unzip onto the workstation
+**If using Eclipse:** the simplest approach is to clone the repository using the Eclipse Git plugin (EGit) perspective.
 
-**Importing into Eclipse:**
+**If using the command line:**
+```shell
+git clone https://github.com/cicsdev/cics-java-liberty-springboot-jcics
+```
+Alternatively, download the sample as a [ZIP](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/archive/main.zip) and unzip onto the workstation.
+
+**If importing into Eclipse:**
 1. In the **Git Repositories** view, right-click the repository → **Import as Project** (imports the root project)
+   *(if you cloned from the command line, use **File → Import → Existing Projects into Workspace** instead, browse to the cloned directory, select all projects, and skip to step 6)*
 2. Switch to the **Java EE** perspective
 3. In the **Project Explorer**, right-click the `cics-java-liberty-springboot-jcics-app` folder → **Import as Project**
 4. Right-click the `cics-java-liberty-springboot-jcics-cicsbundle` folder → **Import as Project**
 5. Right-click the `cics-java-liberty-springboot-jcics-cicsbundle-eclipse` folder → **Import as Project**
-6. Right-click the root project → **Gradle → Refresh Gradle Project** or **Maven → Update Project...** to resolve dependencies
+6. **Required:** Right-click the root project → **Gradle → Refresh Gradle Project** or **Maven → Update Project...** — this resolves Spring Boot and CICS dependencies into the project classpath. Without this step, the WTP export will produce an incomplete WAR missing `WEB-INF/lib`.
 
 
 ### Check dependencies
@@ -91,8 +97,6 @@ For an IDE, taking Eclipse as an example, the plug-ins for Gradle *buildship* an
 The required build-tasks are `clean build` for Gradle and `clean verify` for Maven. Once run, Gradle will generate a WAR file in the `cics-java-liberty-springboot-jcics-app/build/libs` directory, while Maven will generate it in the `cics-java-liberty-springboot-jcics-app/target` directory.
 
 **Note:** When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
-
-**Note:** If you import the project to your IDE, you might experience local project compile errors. To resolve these errors you should run a tooling refresh on that project. For example, in Eclipse: right-click on "Project", select "Gradle → Refresh Gradle Project", **or** right-click on "Project", select "Maven → Update Project...".
 
 ### Gradle Wrapper (command line)
 
@@ -143,7 +147,7 @@ A template `server.xml` is provided [here](./etc/config/liberty/server.xml).
 
 ### CICS Bundle Plugin Deployment (Gradle/Maven)
 
-This is the **recommended** deployment method as it uses the CICS bundle generated during the build process.
+This method uses the CICS bundle generated during the build process.
 
 **Before deploying, configure your JVM server name:**
 
@@ -185,7 +189,7 @@ This repository includes a pre-configured Eclipse CICS bundle project `cics-java
 
 1. Right-click the `cics-java-liberty-springboot-jcics-cicsbundle-eclipse` project → **Export Bundle Project to z/OS UNIX File System** and follow the wizard
 
-> **Note**: The bundle project is pre-configured so that the Eclipse WTP export automatically packages the application WAR with all dependencies. This relies on the `-app` project being open in the same Eclipse workspace. If you have not yet imported the project, follow step 5 of the [Importing into Eclipse](#downloading) instructions first.
+> **Note**: The bundle project is pre-configured so that the Eclipse WTP export automatically packages the application WAR with all dependencies. This relies on the `-app` project being open in the same Eclipse workspace. If you have not yet imported the project, follow steps 3 and 6 of the [Importing into Eclipse](#downloading) instructions first.
 
 ---
 
@@ -266,11 +270,6 @@ The example application is divided into four services which perform actions on a
 - Check Liberty messages.log for errors
 - Verify `servlet-6.0` is enabled in `server.xml`
 - Confirm CICS TS version supports Spring Boot 3.x (V6.1+)
-
-**Issue: Red error markers in Eclipse after Maven Update Project**
-- This is a known false-positive from WTP's deployment assembly validator
-- The project includes `org.eclipse.wst.validation.prefs` to suppress these markers
-- Command-line builds (`./mvnw clean verify`) are not affected
 
 ## License
 This project is licensed under [Eclipse Public License - v 2.0](LICENSE).
