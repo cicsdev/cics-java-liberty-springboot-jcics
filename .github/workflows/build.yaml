@@ -8,6 +8,7 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
+
 jobs:
   check-copyright:
     runs-on: ubuntu-latest
@@ -59,6 +60,7 @@ jobs:
         with:
           java-version: ${{ matrix.jdk }}
           distribution: "semeru"
+          cache: maven
       - name: Build with Maven Wrapper
         run: ./mvnw --batch-mode --update-snapshots --file pom.xml -Djava.version=${{ matrix.jdk }} verify
 
@@ -82,7 +84,7 @@ jobs:
         gradle-version: 8.14.4
     - name: Build with Gradle
       run: gradle clean build -Pjava_version=${{ matrix.jdk }}
-
+      
   build-gradlew:
     name: Build Gradle Wrapper
     
@@ -99,4 +101,3 @@ jobs:
         distribution: 'semeru'
     - name: Build with Gradle Wrapper
       run: ./gradlew clean build -Pjava_version=${{ matrix.jdk }}
-

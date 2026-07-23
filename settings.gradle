@@ -1,6 +1,7 @@
 // ============================================================================
-// Plugins
+// Toolchain Configuration
 // ============================================================================
+// Configure toolchain resolver for auto-provisioning of JDKs
 plugins
 {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
