@@ -1,4 +1,4 @@
-# Maven ignores
+# Maven
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -8,36 +8,91 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 
-# Gradle ignores
-.gradle
+# Gradle
 **/build/
-!src/**/build/
-
-# Ignore Gradle GUI config
+.gradle
 gradle-app.setting
-
-# Cache of project
+!gradle-wrapper.jar
+!gradle-wrapper.properties
 .gradletasknamecache
 
-# Java ignores
+# Java
 *.class
 *.log
-.mtj.tmp/
-
-# Package Files
 *.jar
-!gradle-wrapper.jar
 *.war
 *.nar
 *.ear
 *.zip
 *.tar.gz
 *.rar
-
-# virtual machine crash logs
 hs_err_pid*
 replay_pid*
 
-# Eclipse ignores
-/bin/
+# Eclipse
+# CRITICAL: For multi-module projects, DO NOT ignore .project, .classpath, or .settings/
+# These files MUST be committed for clean customer import experience
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
+.externalToolBuilders/
+*.launch
+.buildpath
+.target
+.tern-project
+.texlipse
+.springBeans
+.recommenders/
+.apt_generated/
+.apt_generated_test/
+.factorypath
+.c9/
+*.pydevproject
+.cproject
+.autotools
+.externalToolBuilders/
+.launches/
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+.idea_modules/
+
+# VS Code
+.vscode/
+*.code-workspace
+.history/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
