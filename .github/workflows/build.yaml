@@ -60,7 +60,6 @@ jobs:
         with:
           java-version: ${{ matrix.jdk }}
           distribution: "semeru"
-          cache: maven
       - name: Build with Maven Wrapper
         run: ./mvnw --batch-mode --update-snapshots --file pom.xml -Djava.version=${{ matrix.jdk }} verify
 
