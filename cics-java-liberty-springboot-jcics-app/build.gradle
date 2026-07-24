@@ -70,7 +70,7 @@ dependencies
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
     // CICS BOM (as of Sept 2024)
-    compileOnly enforcedPlatform('com.ibm.cics:com.ibm.cics.ts.bom:6.1-20250812133513-PH63856')
+    compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:${project.property('cics.bom.version')}")
 
     // Don't include JCICS in the final build (no need for version because we have BOM)
     compileOnly("com.ibm.cics:com.ibm.cics.server")
