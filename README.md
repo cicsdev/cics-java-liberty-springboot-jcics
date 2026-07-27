@@ -6,15 +6,14 @@
 > For Spring Boot 3.x see the [springboot/v3](../../tree/springboot/v3) branch.
 
 > **Pre-publish actions required:**
-> 1. **Eclipse WTP validation** is suspended in
->    `cics-java-liberty-springboot-jcics-app/.settings/org.eclipse.wst.validation.prefs`
->    (`suspend=true`) to avoid a cyclic validation error because WTP does not yet
->    recognise the `servlet-6.1` facet version. Once WTP supports Servlet 6.1, set
->    `suspend=false` and remove this notice.
-> 2. **CICS Explorer SDK classpath entry** in
+> 1. **CICS Explorer SDK classpath entry** in
 >    `cics-java-liberty-springboot-jcics-app/.classpath` references
 >    `JE.JEE_V11_R0` (Jakarta EE 11). This token is not yet present in CICS Explorer
 >    SDK. Once the SDK ships Jakarta EE 11 support, verify the entry resolves correctly.
+> 2. **`web.xml` descriptor version** is temporarily set to `6.0` (Servlet 6.0 XSD)
+>    because WTP does not yet recognise `version="6.1"` and throws an error on project
+>    refresh. Once WTP supports Servlet 6.1, update `web.xml` to use
+>    `web-app_6_1.xsd` and `version="6.1"`, and remove this notice.
 
 ## Overview
 

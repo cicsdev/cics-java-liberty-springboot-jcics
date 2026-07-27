@@ -5,6 +5,6 @@ USER_PREFERENCE=overrideGlobalPreferencestruedisableAllValidationfalseversion1.3
 disabled=06target
 eclipse.preferences.version=1
 override=true
-suspend=true
+suspend=false
 vals/org.eclipse.jst.j2ee.internal.classpathdep.ClasspathDependencyValidator/global=FF
 vf.version=3
