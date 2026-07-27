@@ -17,7 +17,6 @@
   <description>Demo project for Spring Boot JCICS with CICS Liberty - Application</description>
   
   <properties>
-    <java.version>21</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
   </properties>
