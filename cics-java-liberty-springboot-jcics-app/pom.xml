@@ -42,6 +42,13 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
+    <!-- commons-logging must be bundled in the WAR for Liberty deployment (Spring Boot 4.x) -->
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
     <!-- Compile against, but don't include TomCat in the runtime build -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

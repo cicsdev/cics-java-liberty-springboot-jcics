@@ -69,6 +69,9 @@ dependencies
     // Don't include TomCat in the runtime build
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
+    // commons-logging must be bundled in the WAR for Liberty deployment (Spring Boot 4.x)
+    runtimeOnly("commons-logging:commons-logging")
+
     // CICS BOM (as of Sept 2024)
     compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:${project.property('cics.bom.version')}")
 
