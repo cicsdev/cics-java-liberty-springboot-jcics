@@ -5,6 +5,17 @@
 > **Version note:** This branch targets Spring Boot 4.x (Jakarta EE 11, Java 21+).
 > For Spring Boot 3.x see the [springboot/v3](../../tree/springboot/v3) branch.
 
+> **Pre-publish actions required:**
+> 1. **Eclipse WTP validation** is suspended in
+>    `cics-java-liberty-springboot-jcics-app/.settings/org.eclipse.wst.validation.prefs`
+>    (`suspend=true`) to avoid a cyclic validation error because WTP does not yet
+>    recognise the `servlet-6.1` facet version. Once WTP supports Servlet 6.1, set
+>    `suspend=false` and remove this notice.
+> 2. **CICS Explorer SDK classpath entry** in
+>    `cics-java-liberty-springboot-jcics-app/.classpath` references
+>    `JE.JEE_V11_R0` (Jakarta EE 11). This token is not yet present in CICS Explorer
+>    SDK. Once the SDK ships Jakarta EE 11 support, verify the entry resolves correctly.
+
 ## Overview
 
 This sample provides a Spring Boot application that uses the JCICS TSQ Java API to provide a RESTful CICS temporary storage queue (TSQ) browsing service. The sample demonstrates how to integrate Spring Boot with IBM CICS using the JCICS API on a CICS Liberty JVM server.
