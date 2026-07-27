@@ -2,8 +2,8 @@
 <server description="Liberty server for CICS Spring Boot JCICS sample">
 
     <featureManager>
-        <!-- Required for Spring Boot 3.x and Jakarta EE 10 -->
-        <feature>servlet-6.0</feature>
+        <!-- Required for Spring Boot 4.x and Jakarta EE 11 -->
+        <feature>servlet-6.1</feature>
     </featureManager>
 
 </server>

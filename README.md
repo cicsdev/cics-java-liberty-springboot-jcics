@@ -1,6 +1,9 @@
 # cics-java-liberty-springboot-jcics
-[![Build](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml/badge.svg)](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml)
+[![Build](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml/badge.svg?branch=springboot%2Fv4)](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml)
 [![License](https://img.shields.io/badge/License-EPL%202.0-green.svg)](https://www.eclipse.org/legal/epl-2.0/)
+
+> **Version note:** This branch targets Spring Boot 4.x (Jakarta EE 11, Java 21+).
+> For Spring Boot 3.x see the [springboot/v3](../../tree/springboot/v3) branch.
 
 ## Overview
 
@@ -30,9 +33,9 @@ This sample provides a Spring Boot application that uses the JCICS TSQ Java API 
 
 ## Prerequisites
 
-- CICS TS V6.1 or later (required for Spring Boot 3.x and Jakarta EE 10 support)
+- CICS TS V6.1 or later (required for Spring Boot 4.x and Jakarta EE 11 support)
 - A configured Liberty JVM server in CICS
-- Java SE 17 or later on the workstation
+- Java SE 21 or later on the workstation
 - An Eclipse development environment on the workstation (optional)
 - Either Gradle or Apache Maven on the workstation (optional if using Wrappers)
 
@@ -46,9 +49,9 @@ For more information about the development of this sample, see [Spring Boot Java
 
 **If using the command line:**
 ```shell
-git clone https://github.com/cicsdev/cics-java-liberty-springboot-jcics
+git clone -b springboot/v4 https://github.com/cicsdev/cics-java-liberty-springboot-jcics
 ```
-Alternatively, download the sample as a [ZIP](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/archive/main.zip) and unzip onto the workstation.
+Alternatively, download the sample as a [ZIP](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/archive/springboot/v4.zip) and unzip onto the workstation.
 
 **If importing into Eclipse:**
 1. In the **Git Repositories** view, right-click the repository → **Import as Project** (imports the root project)
@@ -62,7 +65,7 @@ Alternatively, download the sample as a [ZIP](https://github.com/cicsdev/cics-ja
 
 ### Check dependencies
  
-Before building this sample, you should verify that the correct CICS TS bill of materials (BOM) is specified for your target release of CICS. The BOM specifies a consistent set of artifacts, and adds information about their scope. In the example below the version specified is compatible with CICS TS V6.1 with JCICS APAR PH63856, or newer. That is, the Java byte codes built by compiling against this version of JCICS will be compatible with later CICS TS versions and subsequent JCICS APARs. 
+Before building this sample, you should verify that the correct CICS TS bill of materials (BOM) is specified for your target release of CICS. The BOM specifies a consistent set of artifacts, and adds information about their scope. In the example below the version specified is compatible with CICS TS V6.1 with JCICS APAR PH63856, or newer. That is, the Java byte codes built by compiling against this version of JCICS will be compatible with later CICS TS versions and subsequent JCICS APARs.
 You can browse the published versions of the CICS BOM at [Maven Central.](https://mvnrepository.com/artifact/com.ibm.cics/com.ibm.cics.ts.bom)
  
 Gradle (build.gradle): 
@@ -140,7 +143,7 @@ This creates a WAR file inside the `cics-java-liberty-springboot-jcics-app/targe
 
 Ensure you have the following features defined in your Liberty `server.xml`:
 
-- `servlet-6.0` (required for Spring Boot 3.x and Jakarta EE 10)
+- `servlet-6.1` (required for Spring Boot 4.x and Jakarta EE 11)
 - `cicsts:security-1.0` if CICS security is enabled
 
 A template `server.xml` is provided [here](./etc/config/liberty/server.xml).
@@ -268,8 +271,8 @@ The example application is divided into four services which perform actions on a
 
 **Issue: Application fails to start**
 - Check Liberty messages.log for errors
-- Verify `servlet-6.0` is enabled in `server.xml`
-- Confirm CICS TS version supports Spring Boot 3.x (V6.1+)
+- Verify `servlet-6.1` is enabled in `server.xml`
+- Confirm CICS TS version supports Spring Boot 4.x (V6.1+)
 
 ## License
 This project is licensed under [Eclipse Public License - v 2.0](LICENSE).
