@@ -7,12 +7,14 @@ This sample provides a Spring Boot application that uses the JCICS TSQ Java API 
 
 Select the branch for your target environment:
 
-| Spring Boot | Branch | Min Java | Jakarta EE | Build Status |
-|-------------|--------|----------|------------|--------------|
-| 4.x | [springboot/v4](../../tree/springboot/v4) | 21 | EE 11 | [![Build](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml/badge.svg?branch=springboot%2Fv4)](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml) |
-| 3.x | [springboot/v3](../../tree/springboot/v3) | 17 | EE 10 | [![Build](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml/badge.svg?branch=springboot%2Fv3)](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml) |
+| Spring Boot | Branch | Min Java | Jakarta EE | Build Status | |
+|-------------|--------|----------|------------|--------------|---|
+| 4.x | [springboot/v4](../../tree/springboot/v4) | 21 | EE 11 | [![Build](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml/badge.svg?branch=springboot%2Fv4)](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml) | ⚠️ Preview |
+| 3.x | [springboot/v3](../../tree/springboot/v3) | 17 | EE 10 | [![Build](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml/badge.svg?branch=springboot%2Fv3)](https://github.com/cicsdev/cics-java-liberty-springboot-jcics/actions/workflows/build.yaml) | |
 
 All branches target CICS TS V6.1 or later.
+
+> ⚠️ **The `springboot/v4` branch is a work-in-progress preview.** It targets Spring Boot 4.x and Jakarta EE 11, which requires Liberty `servlet-6.1` support — not yet available in CICS TS. It is not yet recommended for use.
 
 ## License
 This project is licensed under [Eclipse Public License - v 2.0](LICENSE).
