@@ -24,6 +24,7 @@
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <cics.jvmserver>DFHWLP</cics.jvmserver>
+    <cics.bom.version>6.1-20250812133513-PH63856</cics.bom.version>
   </properties>
   
   <!-- ================================================================ -->
