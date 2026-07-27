@@ -109,7 +109,7 @@ For an IDE, taking Eclipse as an example, the plug-ins for Gradle *buildship* an
 
 The required build-tasks are `clean build` for Gradle and `clean verify` for Maven. Once run, Gradle will generate a WAR file in the `cics-java-liberty-springboot-jcics-app/build/libs` directory, while Maven will generate it in the `cics-java-liberty-springboot-jcics-app/target` directory.
 
-**Note:** When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
+**Note:** When building a WAR file for deployment to Liberty it is good practice to exclude the Tomcat embedded container from the final runtime artifact, as Liberty provides the servlet container. In Spring Boot 4.x, `spring-boot-starter-tomcat` includes `spring-boot-starter` as a compile dependency, which would incorrectly strip core Spring libraries from `WEB-INF/lib` if excluded wholesale. Instead, we exclude only `spring-boot-starter-tomcat-runtime` (the Tomcat embed jars) using the *provided* scope in pom.xml and *providedRuntime()* in build.gradle.
 
 ### Gradle Wrapper (command line)
 
