@@ -5,9 +5,9 @@ permissions:
 
 on:
   push:
-    branches: ["main"]
+    branches: ["springboot/v3"]
   pull_request:
-    branches: ["main"]
+    branches: ["springboot/v3"]
 
 jobs:
   check-copyright:
