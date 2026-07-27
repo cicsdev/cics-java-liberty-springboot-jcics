@@ -42,17 +42,13 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
-    <!-- commons-logging must be bundled in the WAR for Liberty deployment (Spring Boot 4.x) -->
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
-    <!-- Compile against, but don't include TomCat in the runtime build -->
+    <!-- Exclude only the Tomcat embedded container jars from the WAR — Liberty provides the servlet container.
+         In Spring Boot 4.x, spring-boot-starter-tomcat pulls in spring-boot-starter (and thus all core
+         Spring libraries) as a compile dependency, so using provided scope on the full starter would
+         incorrectly exclude spring-core, spring-context etc. from WEB-INF/lib. -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <artifactId>spring-boot-starter-tomcat-runtime</artifactId>
       <scope>provided</scope>
     </dependency>
 

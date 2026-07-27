@@ -66,11 +66,11 @@ dependencies
     // Spring Boot web support
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    // Don't include TomCat in the runtime build
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-
-    // commons-logging must be bundled in the WAR for Liberty deployment (Spring Boot 4.x)
-    runtimeOnly("commons-logging:commons-logging")
+    // Exclude only the Tomcat embedded container jars from the WAR — Liberty provides the servlet container.
+    // In Spring Boot 4.x, spring-boot-starter-tomcat pulls in spring-boot-starter (and thus all core
+    // Spring libraries) as a compile dependency, so using providedRuntime on the full starter would
+    // incorrectly exclude spring-core, spring-context etc. from WEB-INF/lib.
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat-runtime")
 
     // CICS BOM (as of Sept 2024)
     compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:${project.property('cics.bom.version')}")
