@@ -8,6 +8,7 @@ on:
     branches: ["springboot/v4"]
   pull_request:
     branches: ["springboot/v4"]
+  workflow_dispatch:
 
 jobs:
   check-copyright:
