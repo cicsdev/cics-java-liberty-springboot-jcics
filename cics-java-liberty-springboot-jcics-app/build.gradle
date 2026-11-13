@@ -1,6 +1,6 @@
 plugins
 {
-	id 'org.springframework.boot' version '4.1.0'
+	id 'org.springframework.boot' version '4.1.2'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id 'java'
 	id 'eclipse'
@@ -64,7 +64,7 @@ repositories
 dependencies
 {
     // Spring Boot web support
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webmvc")
 
     // Exclude only the Tomcat embedded container jars from the WAR — Liberty provides the servlet container.
     // In Spring Boot 4.x, spring-boot-starter-tomcat pulls in spring-boot-starter (and thus all core
